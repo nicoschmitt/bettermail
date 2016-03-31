@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <div class="loginform col-lg-4 col-md-offset-4">
+            <h2 class="text-center">Log in</h2>
+            
+            <form name="loginform" ng-submit="loginform.$valid && vm.login()" novalidate>
+                <div class="form-group" layout-fill>
+                    <div class="input-group input-group-lg" layout-fill>
+                        <label for="title" class="control-label">name</label>  
+                        <input type="text" name="title" class="form-control" ng-model="vm.user.name" required>
+                    </div>
+                </div>
+                <div class="form-group" layout-fill>
+                    <div class="input-group input-group-lg" layout-fill>
+                        <label for="password" class="control-label">email</label>  
+                        <input type="password" name="password" class="form-control" ng-model="vm.user.password" required>
+                    </div>
+                </div> 
+                <div class="form-group" layout-fill>
+                    <button type="submit" class="btn btn-default btn-raised btn-primary btn-lg vcenter">Login</button>
+                </div>
+            </form>
+            
+            <div class="alert alert-dismissible alert-danger" ng-show="vm.message.length">
+                <strong>Oh snap!</strong>
+                <p>{{vm.message}}</p>
+            </div>
+        </div>
+    </div>
+</div>

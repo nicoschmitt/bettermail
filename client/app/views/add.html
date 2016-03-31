@@ -1,0 +1,37 @@
+<div ng-hide="vm.isAuthenticated()">
+    <h2>Please log in to post image.<h2>
+</div>
+
+<div class="add-form" layout="column" flex="grow" ng-show="vm.isAuthenticated()">
+    <div class="alert alert-dismissible alert-danger" ng-show="vm.message.length">
+        <strong>Oh snap!</strong>
+        <p>{{vm.message}}</p>
+    </div>
+    <div layout="column" flex-offset="5">
+        <div>
+            <h3>Add new pin</h3>
+        </div>
+        <div layout="column">
+            <form name="addform" novalidate ng-submit="addform.$valid && vm.addPin()">
+                <fieldset>
+                    <div class="form-group" layout-fill flex="40">
+                        <div class="input-group input-group-lg" layout-fill>
+                            <label for="title" class="control-label">Title</label>  
+                            <input type="text" name="title" class="form-control" placeholder="pin title" ng-model="vm.pin.title" required>
+                        </div>
+                    </div>
+                    <div class="form-group" layout-fill flex="40">
+                        <div class="input-group input-group-lg" layout-fill>
+                            <label for="url" class="control-label">Url</label>  
+                            <input type="url" name="url" class="form-control" placeholder="pin url" ng-model="vm.pin.url" required>
+                        </div>
+                    </div>
+                    <div class="form-group" layout-fill flex="40">
+                        <button ng-hide="vm.loading" class="btn btn-default btn-raised btn-primary btn-lg vcenter" type="submit">Add</button>
+                        <span ng-show="vm.loading"><i class="fa fa-cog fa-spin fa-3x spin vcenter"></i></span>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

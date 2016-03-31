@@ -1,0 +1,31 @@
+
+<div layout="column" flex="grow">
+    <div layout="column">
+        <h2>Recent images</h2>
+        <div flex="100" ng-show="vm.loading">
+            <i class="fa fa-cog fa-spin fa-5x"></i>
+            <p></p>
+        </div>
+        <div class="alert alert-dismissible alert-danger" ng-show="vm.message.length">
+            <strong>Oh snap!</strong>
+            <p>{{vm.message}}</p>
+        </div>
+    </div>
+    <h4 ng-hide="vm.loading || vm.images.length">No recent images.</h4>
+    <div layout-fill ng-hide="vm.loading">
+        <ul class="dynamic-grid" angular-grid="vm.images" ag-grid-width="300" ag-id="gallery" ng-hide="vm.loading">
+            <li data-ng-repeat="image in vm.images" class="grid" images-loaded="vm.imgLoaded">
+                <img ng-src="{{image.url}}" alt="{{image.title}}" class="grid-img" />
+                <div class="img-info">
+                    <b>{{image.title}}</b> by <a href="#/User/{{image.createdBy}}">{{image.author}}</a>, {{image.when}}
+                </div>
+                <div class="img-action" ng-show="vm.editMode">
+                    <md-button class="md-danger md-fab md-mini" aria-label="give up" ng-click="vm.remove(image)">
+                        <i class="fa fa-trash"></i>
+                        <md-tooltip md-direction="left">delete</md-tooltip>
+                    </md-button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
