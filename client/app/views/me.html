@@ -3,5 +3,11 @@
 </div>
 
 <div class="maincontent" layout="column" flex="grow" ng-show="vm.isAuthenticated()">
-    <h2>Nothing here (maybe one day?)</h2>
+    <md-list>
+        <md-list-item ng-repeat="item in vm.infos">
+            <div class="md-list-item-text">
+                {{item.name}} = {{item.value}}
+            </div>
+        </md-list-item>
+    </md-list>
 </div>

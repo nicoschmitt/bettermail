@@ -40,7 +40,8 @@
             msg: null
         };
     }
-        
+    module.exports.extractAuth = extractAuth;
+    
     module.exports.authRequired = function(req, res, next) {
         var auth = extractAuth(req);
         if (!auth.auth) {
