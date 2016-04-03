@@ -35,7 +35,11 @@
             $(".messageList tr").next().each(function(i, elt){
                 if (!$(this).hasClass("deleted")) {
                     var unread = $(this).hasClass("unseen");
-                    var id = $(this).find("td:nth-child(2) div").text().trim(); 
+                    var id = $(this).find("td:nth-child(4) a").attr("href");
+                    id = id.substr(id.indexOf("?") + 1);
+                    var q = qs.parse(id);
+                    id = q.index;
+                    
                     var date = $(this).find("td:nth-child(3) div").text().trim();
                     var from = $(this).find("td:nth-child(4) a").text(); 
                     var title = $(this).find("td:nth-child(5) a").text(); 
@@ -61,8 +65,7 @@
         var url = process.env.HORDE_URL + "/imp/view.php?Horde=" + req.query.hordeid;
         url += "&mailbox=INBOX&index=" + req.query.mail + "&actionID=view_attach";
         url += "&id=" + req.query.id;
-        // "&mimecache=95927d45e6a19b55b68d06a37fc122df;
-        
+
         var request = getRequest(req.query.hordeid);
         request.get(url).pipe(res);
     }

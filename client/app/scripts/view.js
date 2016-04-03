@@ -52,7 +52,8 @@
                     vm.mail.to = vm.mail.to.replace(/\<[^\>]*\>/g, "");
                 }, genErrorHandler(getMailDetail));
             }
-            getMailDetail();
+            
+            if(vm.isAuthenticated()) getMailDetail();
         }
     ]);
   

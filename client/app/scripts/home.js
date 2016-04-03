@@ -19,7 +19,7 @@
             var renewToken = function() {
                 console.log("reneww auth token");
                 return $http.get("/auth/renew");
-            }
+            };
                        
             var once = true;
             var handleError = function(resp) {
@@ -34,13 +34,14 @@
             };
             
             var getMails = function() {
-                $http.get("/api/mail").then(function(resp) {
+                var uniq = new Date().getTime();
+                $http.get("/api/mail?" + uniq).then(function(resp) {
                     vm.loading = false;
                     vm.mails = resp.data;
                 }, handleError);   
-            }
+            };
             
-            getMails();
+            if (vm.isAuthenticated()) getMails();
         }
     ]);
   

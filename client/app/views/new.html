@@ -7,14 +7,14 @@
         <strong>Oh snap!</strong>
         <p>{{vm.message}}</p>
     </div>
-    <div layout="column" flex-offset="5">
-        <div hide-xs class="newheader">
+    <div class="maincontent" layout="column" >
+        <div hide-xs>
             <h3>New mail</h3>
         </div>
         <div layout="column">
-            <form name="composeform" novalidate ng-submit="composeform.$valid && vm.send()">
-                <fieldset layout='column' flex="90">
-                    <md-input-container>
+            <form name="composeform" class="composeform" novalidate ng-submit="composeform.$valid && vm.send()">
+                <fieldset layout='column' layout-fill>
+                    <md-input-container flex="100">
                         <label>To</label>
                         <md-chips
                             placeholder="email adresses"
@@ -22,11 +22,11 @@
                             md-separator-keys="vm.separators"></md-chips>
                         </md-content>
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container flex="100">
                         <label>Subject</label>
                         <input ng-model="vm.mail.subject" required></input>
                     </md-input-container>
-                    <md-input-container>
+                    <md-input-container flex="100">
                         <label>Content</label>
                         <textarea ng-model="vm.mail.message" rows="8"></textarea>
                     </md-input-container>
