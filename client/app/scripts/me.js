@@ -6,7 +6,7 @@
         function ($scope, $http, $auth) {
             var vm = this;
             vm.isAuthenticated = $auth.isAuthenticated;
-            
+    
             vm.infos = [];
             vm.debugcontent = "";
             

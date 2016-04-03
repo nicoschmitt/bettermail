@@ -17,8 +17,10 @@
                 })
                 .catch(function(error) {
                     if (error.error) vm.message = error.error;
-                    else if (error.data) vm.message = error.data.message;
+                    else if (error.data.message) vm.message = error.data.message;
+                    else if (error.statusText) vm.message = error.statusText;
                     else vm.message = error;
+                    console.log(vm.message);
                 });
             };
         }

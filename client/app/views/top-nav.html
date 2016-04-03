@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Mail</a>
+      <a class="navbar-brand" href="#">myMail</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -19,7 +19,7 @@
         <li class="dropdown" ng-show="vm.isAuthenticated()">
           <a class="pointer" class="dropdown-toggle" bs-dropdown data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> {{vm.getUsername()}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a class="pointer" href="#/Me">My Profile</a></li>
+            <li><a class="pointer" href="#/Me" data-toggle="collapse" data-target=".navbar-collapse.in">My Profile</a></li>
             <li><a class="pointer" ng-click="vm.logout()">Logout</a></li>
           </ul>
         </li>
