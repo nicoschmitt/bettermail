@@ -8,28 +8,32 @@
         <p>{{vm.message}}</p>
     </div>
     <div layout="column" flex-offset="5">
-        <div>
-            <h3>Add new pin</h3>
+        <div hide-xs class="newheader">
+            <h3>New mail</h3>
         </div>
         <div layout="column">
-            <form name="addform" novalidate ng-submit="addform.$valid && vm.addPin()">
-                <fieldset>
-                    <div class="form-group" layout-fill flex="40">
-                        <div class="input-group input-group-lg" layout-fill>
-                            <label for="title" class="control-label">Title</label>  
-                            <input type="text" name="title" class="form-control" placeholder="pin title" ng-model="vm.pin.title" required>
-                        </div>
-                    </div>
-                    <div class="form-group" layout-fill flex="40">
-                        <div class="input-group input-group-lg" layout-fill>
-                            <label for="url" class="control-label">Url</label>  
-                            <input type="url" name="url" class="form-control" placeholder="pin url" ng-model="vm.pin.url" required>
-                        </div>
-                    </div>
-                    <div class="form-group" layout-fill flex="40">
-                        <button ng-hide="vm.loading" class="btn btn-default btn-raised btn-primary btn-lg vcenter" type="submit">Add</button>
+            <form name="composeform" novalidate ng-submit="composeform.$valid && vm.send()">
+                <fieldset layout='column' flex="90">
+                    <md-input-container>
+                        <label>To</label>
+                        <md-chips
+                            placeholder="email adresses"
+                            ng-model="vm.mail.contacts"
+                            md-separator-keys="vm.separators"></md-chips>
+                        </md-content>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Subject</label>
+                        <input ng-model="vm.mail.subject" required></input>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>Content</label>
+                        <textarea ng-model="vm.mail.message" rows="8"></textarea>
+                    </md-input-container>
+                    <md-input-container>
+                        <md-button ng-hide="vm.loading" class="md-primary md-raised vcenter" type="sumbit">Send</md-button>
                         <span ng-show="vm.loading"><i class="fa fa-cog fa-spin fa-3x spin vcenter"></i></span>
-                    </div>
+                    </md-input-container>
                 </fieldset>
             </form>
         </div>

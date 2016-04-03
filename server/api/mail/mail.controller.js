@@ -1,6 +1,7 @@
 (function(){
     var cheerio = require('cheerio');
     var qs      = require('querystring');
+    var shortid = require("shortid");
   
     function getRequest(horde) {
         var request = require("request");
@@ -137,6 +138,44 @@
             
             res.json({});
         });
+    }
+    
+    module.exports.create = function(req, res) {
+        console.log("new mail");
+        var uniq = new Date().getTime();
+        var url = process.env.HORDE_URL + "/imp/compose.php?Horde=" + req.user.hordeid + "&uniq=" + uniq + "&mailbox=INBOX";
+        
+        var request = getRequest(req.user.hordeid);
+        request.get({url: url, followRedirect: false}, function(error, response, body){
+            if (response.statusCode == 302) {
+                return res.status(401).send("login expired");
+            }
+            
+            $ = cheerio.load(body);
+            var form = {};
+            $("#compose input").each(function(){
+                form[$(this).attr("name")] = $(this).val() || "";
+            });
+            form["actionID"] = "send_message";
+            form["save_sent_mail"] = "on";
+            form["sent_mail_folder"] = "Sent";
+            form["save_attachments_select"] = 0;
+            form["charset"] = "UTF-8";
+            
+            form["to"] = req.body.contacts.join(";");
+            form["subject"] = req.body.subject;
+            form["message"] = req.body.message;
+
+            request = getRequest(req.user.hordeid);
+            request.post({url: url, formData: form, followRedirect: false}, function(error, response, body){
+                if (response.statusCode == 302) {
+                    return res.status(401).send("login expired");
+                }
+                
+                res.json({});
+            });
+        });
+
     }
     
 }());

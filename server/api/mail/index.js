@@ -11,6 +11,7 @@
     router.get("/asset", controller.asset);
     router.get('/:id', authUserRequired, controller.getmail);
     router.delete("/:id", authUserRequired, controller.delete);
+    router.post("/", authUserRequired, controller.create);
 
     module.exports = router;
     
