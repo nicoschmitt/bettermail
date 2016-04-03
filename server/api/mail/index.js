@@ -8,6 +8,7 @@
     var controller = require('./mail.controller');
   
     router.get('/', authUserRequired, controller.getallmails);
+    router.get('/debug', authUserRequired, controller.debug);
     router.get("/asset", controller.asset);
     router.get('/:id', authUserRequired, controller.getmail);
     router.delete("/:id", authUserRequired, controller.delete);

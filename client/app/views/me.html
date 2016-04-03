@@ -10,4 +10,11 @@
             </div>
         </md-list-item>
     </md-list>
+    <div layout="row">
+        <md-button class="md-primary md-raised" ng-click="vm.renew()">Renew token</md-button>
+        <md-button class="md-primary md-raised" ng-click="vm.debug()">Debug getmail</md-button>
+    </div>
+    <div layout="column" ng-show="vm.debugcontent">
+        <textarea rows="15">{{vm.debugcontent}}</textarea>
+    </div>
 </div>

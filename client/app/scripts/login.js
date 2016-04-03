@@ -11,7 +11,6 @@
             vm.login = function() {
                 $auth.login(vm.user)
                 .then(function(response) {
-                    console.log(response);
                     $rootScope.currentUser = response.data.user;
                     $window.localStorage.currentUser = JSON.stringify(response.data.user);            
                     $location.path('/');

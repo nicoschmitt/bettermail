@@ -59,6 +59,18 @@
         });
     };
     
+    module.exports.debug = function(req, res) {
+        var url = process.env.HORDE_URL + "/imp/mailbox.php?mailbox=INBOX&Horde=" + req.user.hordeid;
+        var request = getRequest(req.user.hordeid);
+        request.get({url: url, followRedirect: false}, function(error, response, body){
+            if (response.statusCode == 302) {
+                return res.status(401).send("login expired");
+            }
+            
+            res.send(body);
+        });
+    };
+    
     module.exports.asset = function(req, res) {
         console.log("asset");
 
