@@ -2,24 +2,45 @@
     
     var app = angular.module('myApp');
   
-    app.controller('homeCtrl', ['$http', "$auth",
-        function ($http, $auth) {
+    app.controller('homeCtrl', ['$http', "$auth", "$location",
+        function ($http, $auth, $location) {
             var vm = this;
             
             vm.isAuthenticated = $auth.isAuthenticated;
             
             vm.loading = true;
             vm.message = "";
-           
+            vm.mails = [];
+            
+            vm.open = function(mail) {
+                $location.path("/View/" + mail.id);
+            };
+
+            var renewToken = function() {
+                console.log("reneww auth token");
+                return $http.get("/auth/renew");
+            }
+                       
+            var once = true;
             var handleError = function(resp) {
                 vm.loading = false;
-                vm.message = resp.data;
-                console.log(resp.data);
+                if (once && resp.status == 401) {
+                    once = false;
+                    renewToken().then(getMails);
+                } else {
+                    vm.message = resp.data;
+                    console.log(resp.data);
+                }
             };
             
-            $http.get("/api/mail").then(function(resp) {
-                
-            }, handleError);
+            var getMails = function() {
+                $http.get("/api/mail").then(function(resp) {
+                    vm.loading = false;
+                    vm.mails = resp.data;
+                }, handleError);   
+            }
+            
+            getMails();
         }
     ]);
   

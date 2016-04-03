@@ -11,6 +11,7 @@
         },
         name: String,
         password: { type: String, select: false },
+        updated: Date,
         hordeid: String
     })
         

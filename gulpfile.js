@@ -13,7 +13,7 @@ var babel       = require('gulp-babel');
 
 gulp.task('sass', function() {
     return gulp.src('client/css/*.scss')
-                .pipe(sass())
+                .pipe(sass.sync().on('error', sass.logError))
                 .pipe(cssnano())
                 .pipe(gulp.dest(function(f) {
                     return f.base;
@@ -27,7 +27,7 @@ gulp.task("watch-sass", function() {
 gulp.task("app-js", function() {
     return gulp.src(["client/app/app.js", "client/app/scripts/*.js"])
                .pipe(concat("myapp.min.js"))
-               .pipe(babel({ presets: ['es2015'] }))
+               .pipe(babel({ presets: ['es2015'] }).on("error", gutil.log))
                .pipe(uglify().on("error", gutil.log))
                .pipe(gulp.dest("client/app"));
 });
@@ -72,4 +72,3 @@ gulp.task('bower-min-css', function() {
 // Main tasks
 
 gulp.task('default', ["clean", 'bower-js', 'bower-min-js', 'bower-css', 'bower-min-css']);
-gulp.task("production", ["app-script", "replace-js"]);

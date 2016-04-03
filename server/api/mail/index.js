@@ -7,10 +7,10 @@
 
     var controller = require('./mail.controller');
   
-    router.get('/', authUserRequired, controller.getmail);
-    // router.get('/:userid', controller.userwall);
-    // router.post('/', ensureAuthenticated, controller.create);
-    // router.delete('/:pin', ensureAuthenticated, controller.remove);
+    router.get('/', authUserRequired, controller.getallmails);
+    router.get("/asset", controller.asset);
+    router.get('/:id', authUserRequired, controller.getmail);
+    router.delete("/:id", authUserRequired, controller.delete);
 
     module.exports = router;
     

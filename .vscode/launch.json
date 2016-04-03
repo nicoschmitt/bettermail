@@ -14,7 +14,30 @@
 				"--nolazy"
 			],
 			"env": {
-				"NODE_ENV": "development"
+				"NODE_ENV": "development",
+                "HTTPS_PROXY": "http://127.0.0.1:8888",
+                "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
+		},
+		{
+			"name": "Launch w/ ngrok",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceRoot}/server.js",
+			"stopOnEntry": false,
+			"args": [],
+			"cwd": "${workspaceRoot}",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "ngrok",
+                "HTTPS_PROXY": "http://127.0.0.1:8888",
+                "NODE_TLS_REJECT_UNAUTHORIZED": "0"
 			},
 			"externalConsole": false,
 			"sourceMaps": false,

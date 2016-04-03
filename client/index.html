@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <title>better.mail</title>
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
@@ -11,8 +10,6 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="lib/angular-material.min.css" />
     <link rel="stylesheet" href="lib/bootstrap-material-design.min.css">
-    <link rel="stylesheet" href="lib/ripples.min.css">
-    <link rel="stylesheet" href="lib/snackbar.min.css">
   
     <link rel="stylesheet" href="/css/app.css" />
 
@@ -24,10 +21,8 @@
     <script src="lib/angular-animate.min.js"></script>
     <script src="lib/angular-aria.min.js"></script>
     <script src="lib/angular-material.min.js"></script>
-    <script src="lib/ripples.min.js"></script>
+    <script src="lib/angular-sanitize.min.js"></script>
     <script src="lib/satellizer.min.js"></script>
-    <script src="lib/snackbar.min.js"></script>
-    <script src="lib/moment.min.js"></script>
     
     <!--<script src="/app/myapp.min.js"></script>-->
     <script src='/app/app.js'></script>
@@ -35,23 +30,18 @@
     <script src='/app/scripts/login.js'></script>
     <script src='/app/scripts/home.js'></script>
     <script src='/app/scripts/me.js'></script>
-    <script src='/app/scripts/add.js'></script>
-    <script src="/app/scripts/user-wall.js"></script>
-    
+    <script src='/app/scripts/new.js'></script>
+    <script src="/app/scripts/view.js"></script>
   </head>
-  <body layout="column">
-    
+  
+  <body layout="column">  
     <div class="container">
       <top-nav></top-nav>
     </div>
-
     <div class="container">
-        <div class="jumbotron">
-            <md-content md-scroll-y layout="column" flex layout-fill>
-                <div layout-fill ng-view></div>
-            <md-content>
+        <div class="main" layout="column" flex layout-fill>
+            <div layout-fill ng-view></div>
         </div>
     </div>
-    
   </body>
 </html>

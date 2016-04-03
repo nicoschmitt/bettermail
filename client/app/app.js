@@ -2,7 +2,7 @@
 (function() {
     $.material.init();
     
-    var app = angular.module('myApp', [ 'ngRoute', "satellizer", "ngMaterial" ]);
+    var app = angular.module('myApp', [ 'ngRoute', "satellizer", "ngMaterial", "ngSanitize" ]);
   
     app.config(['$routeProvider','$httpProvider', '$authProvider',
         function ($routeProvider, $httpProvider, $authProvider) {
@@ -22,14 +22,14 @@
                 controller: "meCtrl",
                 controllerAs: "vm",
 
-            }).when("/Add", {
-                templateUrl: "/app/views/add.html",
-                controller: "addCtrl",
+            }).when("/View/:id", {
+                templateUrl: "/app/views/view.html",
+                controller: "viewCtrl",
                 controllerAs: "vm",
                 
-            }).when("/User/:userid", {
-                templateUrl: "/app/views/user-wall.html",
-                controller: "userWallCtrl",
+            }).when("/New", {
+                templateUrl: "/app/views/new.html",
+                controller: "newCtrl",
                 controllerAs: "vm",
                 
             }).otherwise({ redirectTo: "/Home" });
