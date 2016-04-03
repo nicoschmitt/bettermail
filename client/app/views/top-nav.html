@@ -11,8 +11,8 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li ng-class="{ active: vm.isActive('/Home')}"><a href="#/Home">Home</a></li>
-        <li ng-class="{ active: vm.isActive('/New')}"ng-show="vm.isAuthenticated()"><a href="#/New">New</a></li>
+        <li ng-class="{ active: vm.isActive('/Home')}" data-toggle="collapse" data-target=".navbar-collapse.in"><a href="#/Home">Home</a></li>
+        <li ng-class="{ active: vm.isActive('/New')}" data-toggle="collapse" data-target=".navbar-collapse.in" ng-show="vm.isAuthenticated()"><a href="#/New">New</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a ng-class="{ active: vm.isActive('/Login')}" href="#/Login" ng-hide="vm.isAuthenticated()">Login</a></li>
