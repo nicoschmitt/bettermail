@@ -12,12 +12,15 @@
         <p>{{vm.message}}</p>
     </div>
     <md-list ng-hide="vm.loading">
-        <md-list-item layout-wrap class="md-3-line" ng-repeat="mail in vm.mails" ng-click="vm.open(mail)">
-            <md-icon md-font-set="md-avatar-icon material-icons">account_circle</md-icon>
-            <div layout-wrap class="md-list-item-text" layout="column" ng-class="{ unread: mail.unread }">
-                <h3>{{ mail.from }}</h3>
-                <p>{{ mail.title }}</p>
-            </div>
-        </md-list-item>
+        <div ng-repeat="mail in vm.mails">
+            <md-list-item layout-wrap class="md-3-line" ng-click="vm.open(mail)">
+                <md-icon class="hide-xs" md-font-set="md-avatar-icon material-icons">account_circle</md-icon>
+                <div layout-wrap class="md-list-item-text" layout="column" ng-class="{ unread: mail.unread }">
+                    <h3>{{ mail.from }}</h3>
+                    <p>{{ mail.title }}</p>
+                </div>
+            </md-list-item>
+            <md-divider></md-divider>
+        </div>
     </md-list>
 </div>
