@@ -1,7 +1,5 @@
 /* global angular */
 (function() {
-    $.material.init();
-    
     var app = angular.module('myApp', [ 'ngRoute', "satellizer", "ngMaterial", "ngSanitize" ]);
   
     app.config(['$routeProvider','$httpProvider', '$authProvider',
