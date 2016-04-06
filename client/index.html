@@ -6,10 +6,8 @@
     
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="lib/angular-material.min.css" />
-    <link rel="stylesheet" href="lib/bootstrap-material-design.min.css">
   
     <link rel="stylesheet" href="/css/app.css" />
 
@@ -35,14 +33,12 @@
     <script src="/app/scripts/chips-fix.js"></script>
   </head>
   
-  <body layout="column">  
-    <div class="container">
+  <body layout="column">
+    <div>
       <top-nav></top-nav>
     </div>
-    <div class="container">
-        <div class="main" layout="column" flex layout-fill>
-            <div layout-fill ng-view></div>
-        </div>
+    <div class="main-container" layout="column">
+        <div ng-view class="main"></div>
     </div>
   </body>
 </html>

@@ -1,28 +1,24 @@
-<div class="container maincontent">
-    <div class="row">
-        <div class="loginform col-lg-4 col-md-offset-4">
-            <h2 class="text-center hide-xs">Log in</h2>
-            <form name="loginform" ng-submit="loginform.$valid && vm.login()" novalidate>
-                <div class="form-group" layout-fill>
-                    <div class="input-group input-group-lg" layout-fill>
-                        <label for="title" class="control-label">login</label>  
-                        <input type="text" name="title" class="form-control" ng-model="vm.user.name" required>
-                    </div>
-                </div>
-                <div class="form-group" layout-fill>
-                    <div class="input-group input-group-lg" layout-fill>
-                        <label for="password" class="control-label">password</label>  
-                        <input type="password" name="password" class="form-control" ng-model="vm.user.password" required>
-                    </div>
-                </div> 
-                <div class="form-group" layout-fill>
-                    <button type="submit" class="btn btn-default btn-raised btn-primary btn-lg vcenter">Login</button>
-                </div>
-            </form>
-            <div class="alert alert-dismissible alert-danger" ng-show="vm.message.length">
-                <strong>Oh snap!</strong>
-                <p>{{vm.message}}</p>
+<div layout="row" layout-align="center">
+    <div class="loginform" flex="30">
+        <h2 class="text-center hide-xs">Log in</h2>
+        <form layout='column' name="loginform" ng-submit="loginform.$valid && vm.login()" novalidate>
+            <md-input-container>
+                <label>login</label>
+                <input ng-model="vm.user.name" required></input>
+                </md-content>
+            </md-input-container>
+            <md-input-container>
+                <label>password</label>
+                <input type="password" ng-model="vm.user.password" required></input>
+                </md-content>
+            </md-input-container>
+            <div layout='row'>
+                <md-button class="md-raised md-primary md-defaut" type="submit" flex="25">Login</md-button>
             </div>
+        </form>
+        <div class="alert alert-dismissible alert-danger" ng-show="vm.message.length">
+            <strong>Oh snap!</strong>
+            <p>{{vm.message}}</p>
         </div>
     </div>
 </div>

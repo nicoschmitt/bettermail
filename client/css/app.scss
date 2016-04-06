@@ -1,17 +1,60 @@
 $black: #333;
 $white: #eee;
 
-html {
+html, body {
     background-color: $black;
 }
 
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: $black;
-};
+    padding: 20px;
+}
+
+h1 {
+    font-size: 3.400rem;
+    font-weight: 300;
+    line-height: 4rem;
+}
+h2 {
+    font-size: 2.400rem;
+    font-weight: 300;
+    line-height: 3.2rem;
+}
+h3 {
+    font-size: 2.000rem;
+    font-weight: 300;
+    letter-spacing: 0.005em;
+}
+h4 {
+    font-size: 1.600rem;
+    font-weight: 300;
+    letter-spacing: 0.010em;
+    line-height: 2.4rem;
+}
+
+.top-nav {
+    h1, h2, span { font-weight: 300; }
+    
+    .nav-app-title {
+        margin-right: 10px;
+    }
+    
+    .nav-menu-item {
+        margin: 5px 5px 5px 5px;
+        padding: 0 10px 0 10px;
+        font-size: 70%;
+        
+        &.active {
+            background-color: rgba(255,255,255,.1);
+        }
+    }
+}
+
+.main-container {
+    margin-top: 20px;   
+}
 
 .main {
+    color: $black;
     background-color: $white;
 }
 
@@ -41,18 +84,8 @@ body {
     float: none;
 };
 
-.md-danger {
-    background-color: #d9534f !important;
-};
-
-.md-success {
-    background-color: #5cb85c !important;
-};
 
 // ---- Home ----
-
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
 
 .unread {
     h3, h4 {
@@ -89,6 +122,12 @@ body {
 
 .composeform {
     margin-top: 15px;
+}
+
+// ---- Login ----
+
+.loginform {
+    margin-bottom: 40px;
 }
 
 // --- 

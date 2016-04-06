@@ -8,6 +8,10 @@
             
             vm.isAuthenticated = function() { return $auth.isAuthenticated(); }
             
+            vm.goToProfile = function() {
+                $location.path("/Me");
+            }
+            
             vm.logout = function() {
                 if ($auth.isAuthenticated()) {
                     $auth.logout().then(function(){

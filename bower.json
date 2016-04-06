@@ -16,7 +16,6 @@
     "angular-route": "^1.5.3",
     "angular-material": "^1.0.7",
     "angular-aria": "^1.5.3",
-    "bootstrap-material-design": "^0.5.9",
     "jquery": "^2.2.3",
     "moment": "^2.12.0",
     "satellizer": "^0.14.0",
@@ -31,17 +30,6 @@
     },
     "angular-aria": {
       "main": "angular-aria.min.js"
-    },
-    "bootstrap-material-design": {
-      "main": [
-        "dist/css/bootstrap-material-design.min.css",
-        "dist/js/material.min.js",
-        "dist/css/ripples.min.css",
-        "dist/js/ripples.min.js"
-      ]
-    },
-    "bootstrap-sass": {
-      "main": []
     },
     "satellizer": {
       "main": "satellizer.min.js"
