@@ -17,8 +17,7 @@
     "angular-material": "^1.0.7",
     "angular-aria": "^1.5.3",
     "bootstrap-material-design": "^0.5.9",
-    "jquery": "^2.2.2",
-    "snackbarjs": "^1.1.0",
+    "jquery": "^2.2.3",
     "moment": "^2.12.0",
     "satellizer": "^0.14.0",
     "angular-sanitize": "^1.5.3"
