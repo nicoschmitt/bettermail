@@ -44,7 +44,7 @@
 
                 $http.post("/api/mail/" + vm.mail.id, vm.mail).then(function(resp){
                     vm.sending = false;
-                    //$location.path("/");
+                    $location.path("/");
                 }, handleError.bind(vm.send));
             };
             

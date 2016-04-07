@@ -247,16 +247,14 @@
             form["subject"] = req.body.subject;
             form["message"] = req.body.message;
 
-            res.status(500).send("bla bla bla'");
-
-            // request = getRequest(req.user.hordeid);
-            // request.post({url: url, formData: form, followRedirect: false}, function(error, response, body){
-            //     if (response.statusCode == 302) {
-            //         return res.status(401).send("login expired");
-            //     }
+            request = getRequest(req.user.hordeid);
+            request.post({url: url, formData: form, followRedirect: false}, function(error, response, body){
+                if (response.statusCode == 302) {
+                    return res.status(401).send("login expired");
+                }
                 
-            //     res.json({});
-            // });
+                res.json({});
+            });
         });
 
     }
