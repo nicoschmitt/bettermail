@@ -99,6 +99,18 @@ a {
         background-color: #f44336;
         color: rgba(255,255,255, 0.84);
     }
+    &.alert-success {
+        background-color: #4caf50;
+        color: rgba(255,255,255, 0.84);
+    }
+    &.alert-info {
+        background-color: #03a9f4;
+        color: rgba(255,255,255, 0.84);
+    }
+    &.alert-warning {
+        background-color: #ff5722;
+        color: rgba(255,255,255, 0.84);
+    }
 }
 
 // ---- Home ----
