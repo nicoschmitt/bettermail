@@ -1,5 +1,5 @@
 <div class="maincontent" ng-hide="vm.isAuthenticated()">
-    <h3>Please log in.<h3>
+    <h3>Please <a href="#/Login">log in</a>.<h3>
 </div>
 <div class="add-form" layout="column" flex="grow" ng-show="vm.isAuthenticated()">
     <div class="alert alert-dismissible alert-danger" ng-show="vm.message.length">

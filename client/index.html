@@ -20,7 +20,7 @@
     <script src="lib/angular-sanitize.min.js"></script>
     <script src="lib/satellizer.min.js"></script>
     
-    <!--<script src="/app/myapp.min.js"></script>-->
+    <!-- build:js app/myapp.min.js -->
     <script src='/app/app.js'></script>
     <script src='/app/scripts/top-nav.js'></script>
     <script src='/app/scripts/login.js'></script>
@@ -29,14 +29,17 @@
     <script src='/app/scripts/new.js'></script>
     <script src="/app/scripts/view.js"></script>
     <script src="/app/scripts/chips-fix.js"></script>
+    <!-- endbuild -->
   </head>
   
-  <body layout="column">
-    <div>
-      <top-nav></top-nav>
-    </div>
-    <div class="main-container" layout="column">
-        <div ng-view class="main"></div>
+  <body layout="row" layout-align="center start">
+    <div layout="column" layout-align="none stretch" flex="90">
+        <div class="topnav-container" flex>
+            <top-nav></top-nav>
+        </div>
+        <div flex class="main-container">
+            <div flex ng-view class="main"></div>
+        </div>
     </div>
   </body>
 </html>

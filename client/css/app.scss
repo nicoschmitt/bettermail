@@ -31,6 +31,10 @@ h4 {
     line-height: 2.4rem;
 }
 
+a {
+    text-decoration: none;
+}
+
 .top-nav {
     h1, h2, span { font-weight: 300; }
     
@@ -49,10 +53,10 @@ h4 {
     }
 }
 
-.main-container {
-    margin-top: 20px;   
+.topnav-container {
+    margin-bottom: 20px;
 }
-
+ 
 .main {
     color: $black;
     background-color: $white;

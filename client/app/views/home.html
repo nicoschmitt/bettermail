@@ -1,8 +1,8 @@
-<div class="maincontent" ng-hide="vm.isAuthenticated()">
+<div layout-padding flex="grow" ng-hide="vm.isAuthenticated()">
     <h3>Please <a href="#/Login">log in</a>.<h3>
 </div>
 
-<div layout="column" flex="grow" ng-show="vm.isAuthenticated()">
+<div layout="column" ng-show="vm.isAuthenticated()">
     <div class="maincontent" flex="100" ng-show="vm.loading">
         <i class="fa fa-cog fa-spin fa-5x"></i>
         <p></p>
