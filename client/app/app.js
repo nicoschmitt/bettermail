@@ -30,6 +30,11 @@
                 controller: "newCtrl",
                 controllerAs: "vm",
                 
+            }).when("/Reply/:id", {
+                templateUrl: "/app/views/reply.html",
+                controller: "replyCtrl",
+                controllerAs: "vm",
+                
             }).otherwise({ redirectTo: "/Home" });
             
    }]);

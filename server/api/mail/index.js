@@ -13,6 +13,8 @@
     router.get('/:id', authUserRequired, controller.getmail);
     router.delete("/:id", authUserRequired, controller.delete);
     router.post("/", authUserRequired, controller.create);
+    router.options("/:id", authUserRequired, controller.replyinfo);
+    router.post("/:id", authUserRequired, controller.reply);
 
     module.exports = router;
     

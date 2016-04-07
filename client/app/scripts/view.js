@@ -13,7 +13,7 @@
             vm.mail = [];
             
             vm.reply = function() {
-                console.log("reply");
+                $location.path("/Reply/" + vm.mail.id);
             }
             
             vm.delete = function() {

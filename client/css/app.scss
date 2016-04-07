@@ -117,6 +117,10 @@ a {
     background-color: #B3B3B3;
 }
 
+.headervalue {
+    font-size: 90%;
+}
+
 .header {
     font-weight: bold;
     margin-right: 5px;
@@ -131,7 +135,14 @@ a {
 // ---- Login ----
 
 .loginform {
+    margin-top: 20px;
     margin-bottom: 40px;
+}
+
+// ---- Me ----
+
+.debug-item {
+    word-wrap: break-word;
 }
 
 // --- 

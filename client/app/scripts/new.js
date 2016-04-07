@@ -12,15 +12,25 @@
             vm.separators = [13, 188];
             
             vm.mail = { subject: "", contacts: [], message: "" };
+
+            var renewToken = function() {
+                console.log("reneww auth token");
+                return $http.get("/auth/renew");
+            };
             
+            var once = true;
             var handleError = function(resp) {
                 vm.loading = false;
-                vm.message = resp.data;
-                console.log(resp.data);
+                if (once && resp.status == 401) {
+                    once = false;
+                    renewToken().then(vm.send);
+                } else {
+                    vm.message = resp.data;
+                    console.log(resp.data);
+                }
             };
             
             vm.send = function() {
-                console.log(vm.mail.contacts);
                 if (vm.mail.contacts.length == 0) {
                     vm.message = "add email to send to";
                     return;

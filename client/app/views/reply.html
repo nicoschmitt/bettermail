@@ -2,20 +2,31 @@
     <h3>Please <a href="#/Login">log in</a>.<h3>
 </div>
 <div class="add-form" layout="column" flex="grow" ng-show="vm.isAuthenticated()">
-    <div class="alert alert-dismissible alert-danger" ng-show="vm.message.length">
+    <div class="md-danger" ng-show="vm.message.length">
         <strong>Oh snap!</strong>
         <p>{{vm.message}}</p>
     </div>
-    <div class="maincontent" layout="column" >
+    <div class="maincontent" ng-show="vm.loading">
+        <i class="fa fa-cog fa-spin fa-5x"></i>
+        <p></p>
+    </div>
+    <div class="maincontent" layout="column" ng-hide="vm.loading">
         <div hide-xs>
-            <h3>New mail</h3>
+            <h3>Reply</h3>
         </div>
         <div layout="column">
             <form name="composeform" class="composeform" novalidate ng-submit="composeform.$valid && vm.send()" layout="column">
                 <md-input-container>
                     <label>To emails</label>
                     <md-chips
-                        ng-model="vm.mail.contacts"
+                        ng-model="vm.mail.to"
+                        md-separator-keys="vm.separators"></md-chips>
+                    </md-content>
+                </md-input-container>
+                <md-input-container>
+                    <label>cc emails</label>
+                    <md-chips
+                        ng-model="vm.mail.cc"
                         md-separator-keys="vm.separators"></md-chips>
                     </md-content>
                 </md-input-container>
@@ -28,8 +39,8 @@
                     <textarea ng-model="vm.mail.message" rows="8"></textarea>
                 </md-input-container>
                 <md-input-container>
-                    <md-button ng-hide="vm.loading" class="md-primary md-raised vcenter" type="sumbit">Send</md-button>
-                    <span ng-show="vm.loading"><i class="fa fa-cog fa-spin fa-3x spin vcenter"></i></span>
+                    <md-button ng-hide="vm.sending" class="md-primary md-raised vcenter" type="sumbit">Send</md-button>
+                    <span ng-show="vm.sending"><i class="fa fa-cog fa-spin fa-3x spin vcenter"></i></span>
                 </md-input-container>
             </form>
         </div>

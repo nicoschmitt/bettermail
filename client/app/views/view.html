@@ -1,9 +1,8 @@
 <div class="maincontent" ng-hide="vm.isAuthenticated()">
     <h3>Please <a href="#/Login">log in</a>.<h3>
 </div>
-
 <div layout="column" flex="grow" ng-show="vm.isAuthenticated()">
-    <div class="maincontent" flex="100" ng-show="vm.loading">
+    <div class="maincontent" ng-show="vm.loading">
         <i class="fa fa-cog fa-spin fa-5x"></i>
         <p></p>
     </div>
@@ -11,7 +10,7 @@
         <strong>Oups</strong>
         <p>{{vm.message}}</p>
     </div>
-    <div layout="column" layout-fill ng-hide="vm.loading">
+    <div layout="column" ng-hide="vm.loading">
         <md-toolbar class="mailactions">
             <div class="md-toolbar-tools">
                 <div class="small"><b>from</b> {{vm.mail.from}}</div>
@@ -25,13 +24,13 @@
             </div>
         </md-toolbar>
         <div layout="column" class="mailheaders">
-            <div layout="row">
+            <div layout="row" layout-align="start end">
                 <div class="header">Subject</div>
-                <div flex>{{vm.mail.subject}}</div>
+                <div class="headervalue">{{vm.mail.subject}}</div>
             </div>
-            <div layout="row">
+            <div layout="row" layout-align="start end">
                 <div class="header">To</div>
-                <div flex>{{vm.mail.to}}</div>
+                <div class="headervalue">{{vm.mail.to}}</div>
             </div>
         </div>
         <div class="mailcontent maincontent" ng-bind-html="vm.mail.content"></div>

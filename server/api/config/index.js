@@ -19,7 +19,8 @@
         var auth = extractAuth(req);
         if (auth.auth) {
             User.findById(auth.user, function(err, user) {
-                info.user = user;
+                info.username = user.name;
+                info.fulluser = user;
                 res.json(info);
             });
         } else {

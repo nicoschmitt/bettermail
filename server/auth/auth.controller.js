@@ -71,7 +71,7 @@
     module.exports.login = function(req, res) {
         console.log("login for " + req.body.name);
         
-        login(req.body.name, req.body.password, function(hordeid) {
+        login(req.body.name.toLowerCase(), req.body.password, function(hordeid) {
 
             User.findOne({ name: req.body.name }, function(err, existingUser) {
                 if (existingUser) {
@@ -82,7 +82,7 @@
                     });
                 } else {
                     var user = new User({ 
-                        name: req.body.name, 
+                        name: req.body.name.toLowerCase(), 
                         password: req.body.password,
                         updated: Date.now(),
                         hordeid: hordeid

@@ -191,5 +191,73 @@
         });
 
     }
-    
+
+    module.exports.replyinfo = function(req, res) {
+        console.log("reply info for " + req.params.id);
+        var uniq = new Date().getTime();
+        var url = process.env.HORDE_URL + "/imp/compose.php?Horde=" + req.user.hordeid + "&uniq=" + uniq + "&thismailbox=INBOX&identity=0&actionID=reply_all&index=" + req.params.id;
+
+        var request = getRequest(req.user.hordeid);
+        request.get({url: url, followRedirect: false}, function(error, response, body){
+            if (response.statusCode == 302) {
+                return res.status(401).send("login expired");
+            }
+            
+            $ = cheerio.load(body);
+            var original = $("#message").val();
+            var to = $("#to").val();
+            
+            var mail = {
+                id: req.params.id,
+                subject: $("#subject").val(),
+                to: $("#to").val(),
+                cc: $("#cc").val(),
+                content: $("#message").val()
+            }
+            
+            res.json(mail);
+        });
+    }
+   
+    module.exports.reply = function(req, res) {
+        console.log("reply to " + req.params.id);
+        var uniq = new Date().getTime();
+        var url = process.env.HORDE_URL + "/imp/compose.php?Horde=" + req.user.hordeid + "&uniq=" + uniq + "&thismailbox=INBOX&identity=0&actionID=reply_all&index=" + req.params.id;
+        
+        var request = getRequest(req.user.hordeid);
+        request.get({url: url, followRedirect: false}, function(error, response, body){
+            if (response.statusCode == 302) {
+                return res.status(401).send("login expired");
+            }
+            
+            $ = cheerio.load(body);
+
+            var form = {};
+            $("#compose input").each(function(){
+                form[$(this).attr("name")] = $(this).val() || "";
+            });
+            form["actionID"] = "send_message";
+            form["save_sent_mail"] = "on";
+            form["sent_mail_folder"] = "Sent";
+            form["save_attachments_select"] = 0;
+            form["charset"] = "UTF-8";
+            
+            form["to"] = req.body.to.join(";");
+            if (req.body.cc) form["cc"] = req.body.cc.join(";");
+            form["subject"] = req.body.subject;
+            form["message"] = req.body.message;
+
+            res.status(500).send("bla bla bla'");
+
+            // request = getRequest(req.user.hordeid);
+            // request.post({url: url, formData: form, followRedirect: false}, function(error, response, body){
+            //     if (response.statusCode == 302) {
+            //         return res.status(401).send("login expired");
+            //     }
+                
+            //     res.json({});
+            // });
+        });
+
+    }
 }());

@@ -3,7 +3,7 @@
         <h2 class="nav-app-title">
             <a href="#/Home">myMail</a>
         </h2>
-        <span ng-class="{ active: vm.isActive('/New')}" class="nav-menu-item">
+        <span ng-class="{ active: vm.isActive('/New')}" class="nav-menu-item" ng-show="vm.isAuthenticated()">
             <h2>
                 <a href="#/New">
                     <md-icon show-xs hide-gt-xs md-font-set="material-icons">add_circle_outline</md-icon>

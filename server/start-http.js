@@ -5,7 +5,7 @@
         var server = {};
         console.log("Env: " + process.env.NODE_ENV)
         var env = process.env.NODE_ENV;
-        var port = process.env.PORT || 80;
+        var port = process.env.PORT || 8080;
         if (env == "development") {
             console.log("Dev env, start HTTPS server");
             var fs = require('fs');
