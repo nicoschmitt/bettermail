@@ -88,6 +88,19 @@ a {
     float: none;
 };
 
+// ----Alert ----
+
+.alert {
+    border: 0;
+    border-radius: 0;
+    
+    &.alert-danger {
+        background-color: #f44336;
+        color: rgba(255,255,255, 0.84);
+    }
+}
+
+
 
 // ---- Home ----
 

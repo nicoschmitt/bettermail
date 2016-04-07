@@ -2,7 +2,7 @@
     <h3>Please <a href="#/Login">log in</a>.<h3>
 </div>
 <div class="add-form" layout="column" flex="grow" ng-show="vm.isAuthenticated()">
-    <div class="md-danger" ng-show="vm.message.length">
+    <div class="alert alert-danger" ng-show="vm.message.length">
         <strong>Oh snap!</strong>
         <p>{{vm.message}}</p>
     </div>
