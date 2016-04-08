@@ -23,14 +23,21 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <div layout="column" class="mailheaders">
-            <div layout="row" layout-align="start end">
-                <div class="header">Subject</div>
-                <div class="headervalue">{{vm.mail.subject}}</div>
+        <div layout="row" class="mailheaders">
+            <div layout="column" flex="grow">
+                <div layout="row" layout-align="start end">
+                    <div class="header">Subject</div>
+                    <div class="headervalue">{{vm.mail.subject}}</div>
+                </div>
+                <div layout="row" layout-align="start end">
+                    <div class="header">To</div>
+                    <div class="headervalue">{{vm.mail.to}}</div>
+                </div>
             </div>
-            <div layout="row" layout-align="start end">
-                <div class="header">To</div>
-                <div class="headervalue">{{vm.mail.to}}</div>
+            <div ng-show="vm.mail.attach.length">
+                <md-button class="md-icon-button" aria-label="Attachment" ng-click="">
+                    <md-icon md-font-set="material-icons">attachment</md-icon>
+                </md-button>
             </div>
         </div>
         <div class="mailcontent maincontent" ng-bind-html="vm.mail.content"></div>

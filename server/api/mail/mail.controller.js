@@ -20,6 +20,11 @@
         return request.defaults({ jar: j, headers: headers });
     }
     
+    function parseLink(href) {
+        var link = href.substr(href.indexOf("?") + 1);
+        return qs.parse(link);
+    }
+    
     module.exports.getallmails = function(req, res) {
         var url = process.env.HORDE_URL + "/imp/mailbox.php?mailbox=INBOX&Horde=" + req.user.hordeid;
         var request = getRequest(req.user.hordeid);
@@ -81,6 +86,17 @@
         request.get(url).pipe(res);
     }
     
+    module.exports.attachment = function(req, res) {
+        console.log("attachment");
+
+        var url = process.env.HORDE_URL + "/services/download/?module=imp&actionID=download_attach&Horde=" + req.query.hordeid;
+        url += "&thismailbox=INBOX&mailbox=INBOX&index=" + req.query.mail + "&actionID=view_attach";
+        url += "&id=" + req.query.id + "&mimecache=" + req.query.mimecache + "&fn=" + encodeURIComponent(req.query.fn);
+
+        var request = getRequest(req.query.hordeid);
+        request.get(url).pipe(res);
+    }
+    
     module.exports.getmail = function(req, res) {
         var url = process.env.HORDE_URL + "/imp/message.php?Horde=" + req.user.hordeid + "&mailbox=INBOX&index=" + req.params.id;
         
@@ -96,22 +112,34 @@
             var when = headers.find("tr:nth-child(1) td:nth-child(2)").text();
             var from = headers.find("tr:nth-child(2) td:nth-child(2) a").text();
             var to = headers.find("tr:nth-child(3) td:nth-child(2)").text();
-            var subject = headers.find("td").last().text();
+            var subject = headers.find("tr:nth-child(4) td:nth-child(2)").text();
+            var attachments = headers.find("tr:nth-child(5) td.msgheader tr");
+            var attach = [];
+            if (attachments.length > 0) {
+                var title = attachments.find("td:nth-child(3)").text();
+                var link = attachments.find("td:nth-child(4) a").attr("href");
+                var q = parseLink(link);
+                
+                attach.push({
+                    title: title,
+                    mimecache: q.mimecache,
+                    id: q.id,
+                    fn: q.fn
+                });
+            }
             
             // token for deletion
             var msgtoken = "";
             var del = $(".msgactions a[href*='delete_message']").first();
             var link = del.attr("href");
-            link = link.substr(link.indexOf("?") + 1);
-            var q = qs.parse(link);
+            var q = parseLink(link);
             msgtoken = q.message_token;
             
             // fix images
             $("#html-message [blocked]").each(function(i, elt) {
                 var src = qs.unescape($(this).attr("blocked"));
                 if (src.startsWith("/imp/")) {
-                    src = src.substr(src.indexOf("?") + 1);
-                    q = qs.parse(src);
+                    q = parseLink(src);
 
                     src = "/api/mail/asset?mail=" + q.index + "&id=" + q.id + "&hordeid=" + q.Horde;
                 }
@@ -137,7 +165,8 @@
                 to: to,
                 subject: subject,
                 msgtoken: msgtoken,
-                content: content
+                content: content,
+                attach: attach
             });
         });
     };
