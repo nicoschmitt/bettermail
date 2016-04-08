@@ -35,9 +35,16 @@
                 </div>
             </div>
             <div ng-show="vm.mail.attach.length">
-                <md-button class="md-icon-button" aria-label="Attachment" ng-click="">
+                <md-button class="md-icon-button" aria-label="Attachment" ng-click="showAttach = !showAttach">
                     <md-icon md-font-set="material-icons">attachment</md-icon>
                 </md-button>
+            </div>
+        </div>
+        <div class="mailheaders" flex="grow" ng-show="showAttach">
+            <div layout="column" ng-repeat="attach in vm.mail.attach">
+                <div class="headervalue">
+                    <a ng-href="{{attach.url}}">{{attach.title}}</a>
+                </div>
             </div>
         </div>
         <div class="mailcontent maincontent" ng-bind-html="vm.mail.content"></div>

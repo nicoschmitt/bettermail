@@ -116,15 +116,21 @@
             var attachments = headers.find("tr:nth-child(5) td.msgheader tr");
             var attach = [];
             if (attachments.length > 0) {
-                var title = attachments.find("td:nth-child(3)").text();
-                var link = attachments.find("td:nth-child(4) a").attr("href");
-                var q = parseLink(link);
-                
-                attach.push({
-                    title: title,
-                    mimecache: q.mimecache,
-                    id: q.id,
-                    fn: q.fn
+                attachments.each(function(){
+                    var title = $(this).find("td:nth-child(3)").text();
+                    var link = $(this).find("td:nth-child(4) a").attr("href");
+                    var q = parseLink(link);
+                    
+                    var url = "/api/mail/attach?hordeid=" + req.user.hordeid;
+                    url += "&mail=" + req.params.id;
+                    url += "&id=" + q.id;
+                    url += "&mimecache=" + q.mimecache;
+                    url += "&fn=" + q.fn;
+                    
+                    attach.push({
+                        title: title,
+                        url: url
+                    }); 
                 });
             }
             
