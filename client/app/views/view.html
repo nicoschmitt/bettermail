@@ -40,10 +40,10 @@
                 </md-button>
             </div>
         </div>
-        <div class="mailheaders" flex="grow" ng-show="showAttach">
+        <div class="mailheaders" ng-show="showAttach">
             <div layout="column" ng-repeat="attach in vm.mail.attach">
                 <div class="headervalue">
-                    <a ng-href="{{attach.url}}">{{attach.title}}</a>
+                    <a download ng-href="{{attach.url}}">{{attach.title}}</a>
                 </div>
             </div>
         </div>
