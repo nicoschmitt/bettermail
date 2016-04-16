@@ -7,6 +7,7 @@
     var controller = require('./mail.controller');
   
     router.get('/', authUserRequired, controller.getallmails);
+    router.get('/page/:page', authUserRequired, controller.getallmails);
     router.get('/debug', authUserRequired, controller.debug);
     router.get("/asset", controller.asset);
     router.get("/attach", controller.attachment);

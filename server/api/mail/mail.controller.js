@@ -26,7 +26,9 @@
     }
     
     module.exports.getallmails = function(req, res) {
-        var url = process.env.HORDE_URL + "/imp/mailbox.php?mailbox=INBOX&Horde=" + req.user.hordeid;
+        var page = req.params.page || 1;
+
+        var url = process.env.HORDE_URL + "/imp/mailbox.php?mailbox=INBOX&Horde=" + req.user.hordeid + "&page=" + page;
         var request = getRequest(req.user.hordeid);
         request.get({url: url, followRedirect: false}, function(error, response, body){
             if (response.statusCode == 302) {
@@ -37,11 +39,12 @@
             
             $ = cheerio.load(body);
             
-            var pagination = $(".mboxcontrol .rightFloat form");
-            var current = pagination.find("#page1").val();
-            console.log("current page: " + current);
-            var available = pagination.find("a[nicetitle='Last Page']").attr("href");
-            
+            var current = $("#page1").val();
+            var last = $("link[rel='Last']").attr("href");
+            var pagination = {
+                current: +current,
+                last: +last
+            };
             
             $(".messageList tr").next().each(function(i, elt){
                 if (!$(this).hasClass("deleted")) {
@@ -66,10 +69,7 @@
             });
   
             res.json({
-                pages: {
-                    current: 1,
-                    all: 1
-                },
+                pages: pagination,
                 mails: mails
             });
         });

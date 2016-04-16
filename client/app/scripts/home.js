@@ -35,9 +35,7 @@
             };
             
             var getMails = function() {
-                // var uniq = new Date().getTime();
-                // $http.get("/api/mail?" + uniq).then(function(resp) {
-                $http.get("/api/mail?" + uniq).then(function(resp) {
+                $http.get("/api/mail").then(function(resp) {
                     vm.loading = false;
                     vm.pages = resp.data.pages;
                     vm.mails = resp.data.mails;
