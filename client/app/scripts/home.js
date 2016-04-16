@@ -11,6 +11,7 @@
             vm.loading = true;
             vm.message = "";
             vm.mails = [];
+            vm.pages = {};
             
             vm.open = function(mail) {
                 $location.path("/View/" + mail.id);
@@ -34,10 +35,12 @@
             };
             
             var getMails = function() {
-                var uniq = new Date().getTime();
+                // var uniq = new Date().getTime();
+                // $http.get("/api/mail?" + uniq).then(function(resp) {
                 $http.get("/api/mail?" + uniq).then(function(resp) {
                     vm.loading = false;
-                    vm.mails = resp.data;
+                    vm.pages = resp.data.pages;
+                    vm.mails = resp.data.mails;
                 }, handleError);   
             };
             

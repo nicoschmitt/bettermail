@@ -36,6 +36,13 @@
             var mails = [];
             
             $ = cheerio.load(body);
+            
+            var pagination = $(".mboxcontrol .rightFloat form");
+            var current = pagination.find("#page1").val();
+            console.log("current page: " + current);
+            var available = pagination.find("a[nicetitle='Last Page']").attr("href");
+            
+            
             $(".messageList tr").next().each(function(i, elt){
                 if (!$(this).hasClass("deleted")) {
                     var unread = $(this).hasClass("unseen");
@@ -57,9 +64,14 @@
                     });
                 }
             });
-            
-            //console.log(mails);
-            res.json(mails);
+  
+            res.json({
+                pages: {
+                    current: 1,
+                    all: 1
+                },
+                mails: mails
+            });
         });
     };
     
