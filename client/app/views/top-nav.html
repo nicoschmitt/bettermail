@@ -1,7 +1,7 @@
 <md-toolbar class="top-nav">
     <div class="md-toolbar-tools">
         <h2 class="nav-app-title">
-            <a href="#/Home">myMail</a>
+            <a href="#" Home">myMail</a>
         </h2>
         <span ng-class="{ active: vm.isActive('/New')}" class="nav-menu-item" ng-show="vm.isAuthenticated()">
             <h2>
@@ -13,7 +13,7 @@
         </span>
         <span flex></span>
         <span ng-show="vm.isAuthenticated()">
-            <md-icon md-font-set="material-icons">person</md-icon> {{vm.getUsername()}}
+            <md-icon md-font-set="material-icons">person</md-icon><span hide-xs>{{vm.getUsername()}}</span>
         </span>
         <md-menu md-position-mode="target-right target">
             <md-button class="md-icon-button" aria-label="More" ng-show="vm.isAuthenticated()">

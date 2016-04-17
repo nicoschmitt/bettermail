@@ -41,9 +41,11 @@
             
             var current = $("#page1").val();
             var last = $("link[rel='Last']").attr("href");
+            last = parseLink(last).page;
             var pagination = {
                 current: +current,
-                last: +last
+                last: +last,
+                max: 20*last
             };
             
             $(".messageList tr").next().each(function(i, elt){

@@ -23,4 +23,7 @@
             <md-divider></md-divider>
         </div>
     </md-list>
+    <paging class="maincontent" ng-hide="vm.loading" 
+            current="vm.pages.current" pages="vm.pages.last"
+            paging-action="vm.switchPage(page)"></paging>
 </div>

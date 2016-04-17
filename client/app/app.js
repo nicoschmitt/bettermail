@@ -8,7 +8,8 @@
             $routeProvider.when("/Home", {
                 templateUrl: "/app/views/home.html",
                 controller: "homeCtrl",
-                controllerAs: "vm"
+                controllerAs: "vm",
+                reloadOnSearch: false
 
             }).when("/Login", {
                 templateUrl: "/app/views/login.html",
