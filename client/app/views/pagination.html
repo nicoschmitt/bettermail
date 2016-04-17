@@ -2,7 +2,7 @@
     <li title="Previous page" ng-class="{disabled: (current == 1)}">
         <a href="" ng-click="previous(this)">&lt;&lt;</a>
     </li>
-    <li ng-repeat="item in items" title="{{item.title}}" class="{{item.liClass}}" hide-xs="{{ current == item.page ? 'false' : 'true' }}">
+    <li ng-repeat="item in items" title="{{item.title}}" class="{{item.liClass}}" ng-class="{ 'hide-xs': current != item.page }">
         <a href="" ng-click="item.action()">{{item.title}}</a>
     </li>
     <li title="Next page" ng-class="{disabled: (current == pages)}">
