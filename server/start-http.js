@@ -1,5 +1,13 @@
 (function(){
     
+    var httpsRedirect = function(req, res, next) {
+        if (req.headers['x-forwarded-proto'] != 'https') {
+            return res.redirect(301, 'https://' + req.headers.host + req.url);
+        } else {
+            return next();
+        }
+    };
+    
     module.exports.start = function(app) {
         
         var server = {};
@@ -7,7 +15,7 @@
         var env = process.env.NODE_ENV;
         var port = process.env.PORT || 8080;
         if (env == "development") {
-            console.log("Dev env, start HTTPS server");
+            // start a local https server
             var fs = require('fs');
             var https = require('https');
             var options = {
@@ -19,6 +27,10 @@
         } else {
             var http = require('http');
             server = http.createServer(app);
+            if (env == "production") {
+                // force https on production
+                app.use(httpsRedirect);
+            }
         }
 
         server.listen(port, process.env.IP || "0.0.0.0", function() {
