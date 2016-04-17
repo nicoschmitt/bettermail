@@ -36,6 +36,11 @@
                 controller: "replyCtrl",
                 controllerAs: "vm",
                 
+            }).when("/Search", {
+                templateUrl: "/app/views/search.html",
+                controller: "searchCtrl",
+                controllerAs: "vm",
+                
             }).otherwise({ redirectTo: "/Home" });
             
    }]);

@@ -307,4 +307,28 @@
         });
 
     }
+    
+    module.exports.search = function(req, res) {
+        var page = req.params.page || 1;
+        console.log(req.body);
+        return res.json({});
+        
+        var form = {
+            actionID: "do_search",
+            'field[0]': 'from',
+            'search_text[0]': req.body.sender,
+            'field[2]': 'subject',  
+            'search_text[2]': req.body.subject,
+            'search_folder[]': "INBOX"
+        };
+
+        var url = process.env.HORDE_URL + "/imp/search.php?Horde=" + req.user.hordeid;
+        var request = getRequest(req.user.hordeid);
+        request.get({url: url, followRedirect: false}, function(error, response, body){
+            if (response.statusCode == 302) {
+                return res.status(401).send("login expired");
+            }
+        });
+    };   
+    
 }());

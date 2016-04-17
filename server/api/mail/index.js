@@ -11,8 +11,13 @@
     router.get('/debug', authUserRequired, controller.debug);
     router.get("/asset", controller.asset);
     router.get("/attach", controller.attachment);
+
+    router.post("/search", authUserRequired, controller.search);
+
     router.get('/:id', authUserRequired, controller.getmail);
+    
     router.delete("/:id", authUserRequired, controller.delete);
+    
     router.post("/", authUserRequired, controller.create);
     router.options("/:id", authUserRequired, controller.replyinfo);
     router.post("/:id", authUserRequired, controller.reply);
