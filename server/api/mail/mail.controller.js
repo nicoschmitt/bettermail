@@ -41,11 +41,14 @@
             
             var current = $("#page1").val();
             var last = $("link[rel='Last']").attr("href");
-            last = parseLink(last).page;
+            if (last) {
+                last = parseLink(last).page;
+            } else {
+                last = current;
+            }
             var pagination = {
                 current: +current,
-                last: +last,
-                max: 20*last
+                last: +last
             };
             
             $(".messageList tr").next().each(function(i, elt){
@@ -309,26 +312,142 @@
     }
     
     module.exports.search = function(req, res) {
-        var page = req.params.page || 1;
-        console.log(req.body);
-        return res.json({});
-        
         var form = {
             actionID: "do_search",
+            delete_field_id: "",
+            edit_query: "",
+            edit_query_vfolder: "",
+            search_match: "and",
             'field[0]': 'from',
-            'search_text[0]': req.body.sender,
+            'search_text[0]': req.body.sender || "",
+            'field[1]': 'to',  
+            'search_text[1]': "",
             'field[2]': 'subject',  
-            'search_text[2]': req.body.subject,
-            'search_folder[]': "INBOX"
+            'search_text[2]': req.body.subject || "",
+            'field[3]': 'body',  
+            'search_text[3]': "",
+            'field[4]': '',  
+            'search_folders[]': "INBOX",
+            vfolder_label: ""
         };
 
         var url = process.env.HORDE_URL + "/imp/search.php?Horde=" + req.user.hordeid;
         var request = getRequest(req.user.hordeid);
-        request.get({url: url, followRedirect: false}, function(error, response, body){
-            if (response.statusCode == 302) {
-                return res.status(401).send("login expired");
+        request.post({url: url, form: form, followAllRedirects: true}, function(error, response, body){
+            if (response.request.path.startsWith("/imp/login.php")) return res.status(401).send("login expired");
+            
+            if (response.request.path.startsWith("/imp/search.php")) {
+                return res.json({
+                    pages: { current: 1, last: 1 },
+                    mails: []
+                });
             }
+            
+            var searchid = parseLink(response.request.path).mailbox;
+            
+            var mails = [];
+            
+            $ = cheerio.load(body);
+            
+            var current = $("input[name='page']").val();
+            var last = $("link[rel='Last']").attr("href");
+            if (last) {
+                last = parseLink(last).page;
+            } else {
+                last = current;
+            }
+            var pagination = {
+                current: +current,
+                last: +last
+            };
+            
+            $(".messageList tr").next().each(function(i, elt){
+                if (!$(this).hasClass("deleted")) {
+                    var unread = $(this).hasClass("unseen");
+                    var id = $(this).find("td:nth-child(4) a").attr("href");
+                    id = id.substr(id.indexOf("?") + 1);
+                    var q = qs.parse(id);
+                    id = q.index;
+                    
+                    var date = $(this).find("td:nth-child(3) div").text().trim();
+                    var from = $(this).find("td:nth-child(4) a").text(); 
+                    var title = $(this).find("td:nth-child(5) a").text(); 
+                    
+                    mails.push({
+                        id: id,
+                        date: date,
+                        from: from,
+                        title: title,
+                        unread: unread 
+                    });
+                }
+            });
+  
+            res.json({
+                searchid: searchid,
+                pages: pagination,
+                mails: mails
+            });
         });
     };   
+    
+    module.exports.searchpaging = function(req, res) {
+        var searchid = req.query.searchid;
+        var page = req.params.page;
+        var url = process.env.HORDE_URL + "/imp/mailbox.php?Horde=" + req.user.hordeid + "&mailbox=" + searchid + "&page=" + page;
+        var request = getRequest(req.user.hordeid);
+        request.get({url: url }, function(error, response, body){
+            if (response.request.path.startsWith("/imp/login.php")) return res.status(401).send("login expired");
+            
+            var mails = [];
+            
+            {
+                var fs = require("fs");
+                fs.writeFile("result.html", body, () => {});
+            }
+            
+            $ = cheerio.load(body);
+            
+            var current = $("input[name='page']").val();
+            var last = $("link[rel='Last']").attr("href");
+            if (last) {
+                last = parseLink(last).page;
+            } else {
+                last = current;
+            }
+            var pagination = {
+                current: +current,
+                last: +last
+            };
+            
+            $(".messageList tr").next().each(function(i, elt){
+                if (!$(this).hasClass("deleted")) {
+                    var unread = $(this).hasClass("unseen");
+                    var id = $(this).find("td:nth-child(4) a").attr("href");
+                    id = id.substr(id.indexOf("?") + 1);
+                    var q = qs.parse(id);
+                    id = q.index;
+                    
+                    var date = $(this).find("td:nth-child(3) div").text().trim();
+                    var from = $(this).find("td:nth-child(4) a").text(); 
+                    var title = $(this).find("td:nth-child(5) a").text(); 
+                    
+                    mails.push({
+                        id: id,
+                        date: date,
+                        from: from,
+                        title: title,
+                        unread: unread 
+                    });
+                }
+            });
+  
+            res.json({
+                searchid: searchid,
+                pages: pagination,
+                mails: mails
+            });
+        });
+    }
     
 }());

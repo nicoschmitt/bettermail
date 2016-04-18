@@ -13,6 +13,7 @@
             vm.search = { sender: "", subject: "" };
             vm.mails = [];
             vm.pages = { current: 0, max: 0, last: 0 };
+            vm.searchid = "";
             
             vm.open = function(mail) {
                 $location.path("/View/" + mail.id);
@@ -22,11 +23,11 @@
                 vm.mails = [];
                 vm.pages = { current: 0, max: 0, last: 0 };
                 vm.loading = true;
-                console.log(vm.search);
                 $http.post("/api/mail/search", vm.search).then(function(resp) {
                     vm.loading = false;
                     vm.pages = resp.data.pages;
                     vm.mails = resp.data.mails;
+                    vm.searchid = resp.data.searchid;
                 }, handleError.bind(vm.dosearch));
             };
 
@@ -36,6 +37,7 @@
             };
             
             var renewToken = function() {
+                console.log("renew token");
                 return $http.get("/auth/renew");
             };
                        
@@ -53,9 +55,8 @@
             };
             
             var getPage = function(page) {
-                $location.search("page", page);
                 vm.loading = true;
-                $http.get("/api/mail/page/" + page).then(function(resp) {
+                $http.get("/api/mail/search/" + page + "?searchid=" + vm.searchid).then(function(resp) {
                     vm.loading = false;
                     vm.pages = resp.data.pages;
                     vm.mails = resp.data.mails;

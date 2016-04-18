@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<!--   IMP: Copyright 2001-2009 The Horde Project.  IMP is under the GPL.  -->
+<!-- Horde Project: http://www.horde.org/ | IMP: http://www.horde.org/imp/ -->
+<!--        GNU Public License: http://www.fsf.org/copyleft/gpl.html       -->
+<html lang="en-US"><head><script type="text/javascript">//<![CDATA[
+var IMP = {"conf":{"hasDOM":true,"IMP_ALL":0,"isIE":false,"pop3":false,"fixed_folders":[],"js_editor":"xinha"},"text":{"compose_cancel":"Cancelling this message will permanently discard its contents.\nAre you sure you want to do this?","compose_discard":"Doing so will discard this message permanently.","compose_recipient":"You must specify a recipient.","compose_sigreplace":"The signature was successfully replaced.","compose_signotreplace":"The signature could not be replaced.","compose_nosubject":"The message does not have a Subject entered.\nSend message without a Subject?","compose_file":"File","compose_attachment":"Attachment","compose_inline":"Inline","mailbox_submit":"You must select at least one message first.","mailbox_delete":"Are you sure you wish to PERMANENTLY delete these messages?","mailbox_selectone":"You must select at least one message first.","yes":"Yes","no":"No","contacts_select":"You must select an address first.","contacts_closed":"The message being composed has been closed. Exiting.","contacts_called":"This window must be called from a compose window.","folders_select":"Please select a folder before you perform this action.","folders_oneselect":"Only one folder should be selected for this action.","folders_subfolder1":"You are creating a sub-folder to","folders_subfolder2":"Please enter the name of the new folder:","folders_toplevel":"You are creating a top-level folder.\nPlease enter the name of the new folder:","folders_download1":"All messages in the following folder(s) will be downloaded into one MBOX file:","folders_download2":"This may take some time. Are you sure you want to continue?","folders_rename1":"You are renaming the folder:","folders_rename2":"Please enter the new name:","folders_no_rename":"This folder may not be renamed:","search_select":"Please select at least one folder to search.","popup_block":"A popup window could not be opened. Perhaps you have set your browser to block popup windows?","login_username":"Please provide your username.","login_password":"Please provide your password.","spam_report":"Are you sure you wish to report this message as spam?","notspam_report":"Are you sure you wish to report this message as innocent?","newfolder":"You are copying\/moving to a new folder.\nPlease enter a name for the new folder:\n","target_mbox":"You must select a target mailbox first."}};
+//]]></script>
+<script type="text/javascript" src="/js/prototype.js"></script>
+<script type="text/javascript" src="/js/horde-prototype.js"></script>
+<script type="text/javascript" src="/js/accesskeys.js"></script>
+<script type="text/javascript" src="/imp/js/effects.js"></script>
+<script type="text/javascript" src="/imp/js/redbox.js"></script>
+<script type="text/javascript" src="/imp/js/mailbox.js"></script>
+<link href="/themes/screen.css" rel="stylesheet" type="text/css" />
+<link href="/themes/mozilla/screen.css" rel="stylesheet" type="text/css" />
+<link href="/themes/safari.css" rel="stylesheet" type="text/css" />
+<link href="/imp/themes/screen.css" rel="stylesheet" type="text/css" />
+<link href="/imp/themes/mozilla/screen.css" rel="stylesheet" type="text/css" />
+<title>Mail :: Search Results</title>
+<link href="/imp/themes/graphics/favicon.ico" rel="SHORTCUT ICON" />
+<link href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9" rel="Up" />
+<link href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=1" rel="First" />
+<link href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=2" rel="Previous" id="prev" />
+<link href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=4" rel="Next" id="next" />
+<link href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=12" rel="Last" />
+<link rel="alternate" type="application/rss+xml" href="/imp/rss.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9/%2A%2Asearch_522xqcm81hgkow0ow4wss4" />
+<link href="/imp/search.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9" rel="search" />
+</head>
+
+<body>
+<script type="text/javascript" src="/imp/js/popup.js"></script>
+<script type="text/javascript" src="/js/popup.js"></script>
+<form action="mailbox.php" method="get" name="menuform"> 
+<input type="hidden" name="Horde" value="d4ebcc89b5ebf94c79649d660f7a21c9" />
+ 
+<div id="menu"> 
+ 
+ <div class="rightFloat"> 
+  <input type="hidden" name="no_newmail_popup" value="1" /> 
+  <label for="mailbox" accesskey="l"> 
+  <select id="mailbox" name="mailbox" onchange="folderSubmit()"><option value="INBOX">Inbox</option>
+<option value="Brouillons">Brouillons</option>
+<option value="Drafts">Drafts</option>
+<option value="drafts">drafts</option>
+<option value="Envoye">Envoye</option>
+<option value="Sent">Sent</option>
+<option value="sent-mail">sent-mail</option>
+<option value="Shared Folders/testdsi">Shared Folders/testdsi</option>
+<option value="" disabled="disabled">- - - - - - - - -</option>
+<option value="**search_296bpg1j6vr4csk880oo8w">Virtual INBOX</option>
+</select> 
+  </label> 
+ </div> 
+ <div class="rightFloat"> 
+  <ul><li class="rightFloat"><a href="#" onclick="folderSubmit(true); return false;"><img src="/imp/themes/graphics/folders/folder_open.png" alt="Open Folder" title="" /><br />Open Fo<span class="accessKey">l</span>der</a></li></ul> 
+ </div> 
+ 
+ <div class="leftFloat"> 
+  <ul>
+<li><a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=INBOX" class="current" accesskey="I"><img src="/imp/themes/graphics/folders/inbox.png" alt="Inbox" title="" /><br /><span class="accessKey">I</span>nbox</a></li>
+<li><a href="javascript:popup_imp('/imp/compose.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9',700,650,'mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4');" accesskey="N"><img src="/imp/themes/graphics/compose.png" alt="New Message" title="" /><br /><span class="accessKey">N</span>ew Message</a></li>
+<li><a href="/imp/folders.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9" accesskey="F"><img src="/imp/themes/graphics/folders/folder.png" alt="Folders" title="" /><br /><span class="accessKey">F</span>olders</a></li>
+<li><a href="/imp/search.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9" accesskey="S"><img src="/themes/graphics/search.png" alt="Search" title="" /><br /><span class="accessKey">S</span>earch</a></li>
+<li><a href="/services/prefs.php?app=imp&amp;Horde=d4ebcc89b5ebf94c79649d660f7a21c9" accesskey="O"><img src="/themes/graphics/prefs.png" alt="Options" title="" /><br /><span class="accessKey">O</span>ptions</a></li>
+<li><a href="/services/problem.php?return_url=https%3A%2F%2Fdsiwebmail.mnhn.fr%2Fimp%2Fmailbox.php%3FHorde%3Dd4ebcc89b5ebf94c79649d660f7a21c9%26mailbox%3D%252A%252Asearch_522xqcm81hgkow0ow4wss4%26page%3D3&amp;Horde=d4ebcc89b5ebf94c79649d660f7a21c9"><img src="/themes/graphics/problem.png" alt="Problem" title="" /><br />Problem</a></li>
+<li><a href="https://dsiwebmail.mnhn.fr/services/help/?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;module=imp" onclick="popup(this.href); return false;" class="helplink" target="help"><img src="/themes/graphics/help_index.png" alt="Help" title="" /><br />Help</a></li>
+<li><a href="/login.php?horde_logout_token=WzUckGLT_5QVQvTkURCcFe0W_D0&amp;app=imp&amp;logout_reason=logout&amp;Horde=d4ebcc89b5ebf94c79649d660f7a21c9" target="_parent"><img src="/themes/graphics/logout.png" alt="Log out" title="" /><br />Log out</a></li></ul> 
+ </div> 
+ <br class="clear" /> 
+</div> 
+<div class="clear"></div> 
+</form> 
+ 
+ 
+<script type="text/javascript"> 
+var loading; 
+function folderSubmit(clear) 
+{ 
+    if (document.menuform.mailbox[document.menuform.mailbox.selectedIndex].value != '') { 
+        if ((loading == null) || (clear != null)) { 
+            loading = true; 
+            document.menuform.submit(); 
+        } 
+    } 
+} 
+</script> 
+ 
+<table id="quota" width="100%" border="0" cellpadding="3" cellspacing="0"> 
+ <tr> 
+  <td class="control" align="center"> 
+   Quota status: 298.89 MB / 488.28 MB  (61.21%) 
+  </td> 
+ </tr> 
+</table> 
+<div class="header"> 
+ <div style="width:40%" class="leftFloat"> 
+  <span dir="ltr"><a href="#" title="&lt;pre&gt;Search&nbsp;From&nbsp;for&nbsp;&amp;#039;&amp;#039;&nbsp;and&nbsp;To&nbsp;for&nbsp;&amp;#039;&amp;#039;&nbsp;and&nbsp;Subject&nbsp;for&nbsp;&amp;#039;usm503&amp;#039;&nbsp;and&nbsp;Body&nbsp;for&nbsp;&amp;#039;&amp;#039;&lt;br /&gt;in&nbsp;INBOX&lt;/pre&gt;">Search Results</a></span> 
+  <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=3" title="Refresh Search Results (Accesskey R)" accesskey="R"><img src="/themes/graphics/reload.png" alt="Reload" title="" /></a> 
+   
+  <a href="/imp/search.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;edit_query=522xqcm81hgkow0ow4wss4" title="Edit Search Query"><img src="/themes/graphics/edit.png" alt="Edit Search Query" title="" /></a> 
+   
+   
+ </div> 
+ 
+ <div style="width:20%" class="leftFloat"> 
+  Page 3 of 12 
+ </div> 
+ <div style="width:40%" class="rightFloat rightAlign"> 
+ 
+  41 to 60 of 230 Messages 
+ </div> 
+ <div class="clear"></div> 
+</div> 
+<table width="100%" cellspacing="0"> 
+ <tr class="mboxcontrol"> 
+  <td> 
+   <div class="leftFloat"> 
+    <form id="select1" action="javascript:void(0)" onsubmit="return false"> 
+    <input type="hidden" name="mailbox" value="**search_522xqcm81hgkow0ow4wss4" /> 
+    <label for="filter1" class="hidden">Select:</label> 
+    <select id="filter1" name="filter" onchange="makeSelection(1);"> 
+     <option value="" selected="selected">Select:</option> 
+     <option value="!0">All</option> 
+     <option value="0">None</option> 
+     <option value="+0">Invert</option> 
+ 
+     <option value="!1">Seen</option> 
+     <option value="1">Unseen</option> 
+     <option value="8">Flagged For Followup</option> 
+     <option value="!8">Not Flagged</option> 
+     <option value="4">Answered</option> 
+     <option value="!4">Unanswered</option> 
+     <option value="2">Deleted</option> 
+     <option value="!2">Not Deleted</option> 
+     <option value="16">Draft</option> 
+     <option value="!16">Not Draft</option> 
+     <option value="32">Personal</option> 
+     <option value="!32">Not Personal</option> 
+    </select> 
+    <label for="flag1" class="hidden">Mark as:</label> 
+    <select id="flag1" name="flag" onchange="flagMessages(1);"> 
+     <option value="" selected="selected">Mark as:</option> 
+     <option value="Seen">Seen</option> 
+     <option value="0Seen">Unseen</option> 
+     <option value="Flagged">Flagged For Followup</option> 
+     <option value="0Flagged">Not Flagged</option> 
+     <option value="Answered">Answered</option> 
+     <option value="0Answered">Unanswered</option> 
+ 
+     <option value="Deleted">Deleted</option> 
+     <option value="0Deleted">Not Deleted</option> 
+ 
+     <option value="Draft">Draft</option> 
+     <option value="0Draft">Not Draft</option> 
+ 
+    </select> 
+    </form> 
+   </div> 
+ 
+   <div class="leftFloat" style="padding-left:10px"> 
+    <form method="post" action="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9"> 
+    <input type="hidden" name="mailbox" value="**search_522xqcm81hgkow0ow4wss4" /> 
+    <ul class="msgactions" style="display:inline"> 
+     <li><a href="#" onclick="transfer('move_messages', 1); return false;" class="widget">Move</a></li> 
+     <li class="lastnavbar"><a href="#" onclick="transfer('copy_messages', 1); return false;" class="widget">Copy</a></li> 
+    </ul> 
+    <label for="targetMailbox1" class="hidden">Target Mailbox:</label> 
+    <select id="targetMailbox1" name="targetMailbox" onchange="updateFolders(1);"> 
+     <option value="">Messages to</option>
+<option value="" disabled="disabled">- - - - - - - - -</option>
+<option value="*new*">New Folder</option>
+<option value="" disabled="disabled">- - - - - - - - -</option>
+<option value="INBOX">Inbox</option>
+<option value="Brouillons">Brouillons</option>
+<option value="Drafts">Drafts</option>
+<option value="drafts">drafts</option>
+<option value="Envoye">Envoye</option>
+<option value="Sent">Sent</option>
+<option value="sent-mail">sent-mail</option>
+<option value="Shared Folders/testdsi">Shared Folders/testdsi</option>
+<option value="" disabled="disabled">&nbsp;</option><option value="" disabled="disabled">- - Task Lists - -</option>
+<option value="_tasklist_decian@mnhn.fr">Liste des tâches de decian@mnhn.fr</option>
+<option value="" disabled="disabled">&nbsp;</option><option value="" disabled="disabled">- - Notepads - -</option>
+<option value="_notepad_decian@mnhn.fr">Bloc-notes de decian@mnhn.fr</option>
+ 
+    </select> 
+    </form> 
+   </div> 
+ 
+   <div class="rightFloat"> 
+ 
+    <form method="get" action="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9"> 
+    <input type="hidden" name="mailbox" value="**search_522xqcm81hgkow0ow4wss4" /> 
+    <input type="hidden" name="Horde" value="d4ebcc89b5ebf94c79649d660f7a21c9" />
+ 
+    <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=1" title="First Page"><img src="/themes/graphics/nav/first.png" alt="&lt;&lt;" title="" /></a> <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=2" title="Previous Page"><img src="/themes/graphics/nav/left.png" alt="&lt;" title="" /></a> 
+    <label for="page1" class="hidden">Page:</label> 
+    <input type="text" id="page1" name="page" value="3" size="2" /> 
+    <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=4" title="Next Page"><img src="/themes/graphics/nav/right.png" alt="&gt;" title="" /></a> <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=12" title="Last Page"><img src="/themes/graphics/nav/last.png" alt="&gt;&gt;" title="" /></a> 
+    </form> 
+ 
+   </div> 
+  </td> 
+ </tr> 
+</table> 
+<table width="100%" cellspacing="0"> 
+ <tr> 
+  <td class="mboxcontrol bottombordercollapse"> 
+   <div class="rightFloat"> 
+    <ul class="msgactions"> 
+     <li><a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=3&amp;actionID=hide_deleted&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" class="widget">Hide Deleted</a></li> 
+     <li class="lastnavbar"><a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;page=3&amp;actionID=expunge_mailbox&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" class="widget" accesskey="g">Pur<span class="accessKey">g</span>e Deleted</a></li> 
+    </ul> 
+   </div> 
+   <div class="leftFloat"> 
+    <ul class="msgactions"> 
+     <li><a href="#" onclick="messages_submit('delete_messages'); return false;" class="widget" accesskey="D"><span class="accessKey">D</span>elete</a></li> 
+     <li><a href="#" onclick="messages_submit('undelete_messages'); return false;" class="widget" accesskey="U"><span class="accessKey">U</span>ndelete</a></li> 
+     <li><a href="#" onclick="messages_submit('blacklist'); return false;" class="widget" accesskey="B"><span class="accessKey">B</span>lacklist</a></li> 
+     <li><a href="#" onclick="messages_submit('whitelist'); return false;" class="widget" accesskey="W"><span class="accessKey">W</span>hitelist</a></li> 
+     <li><a href="#" onclick="messages_submit('fwd_digest'); return false;" class="widget">Forward</a></li> 
+      
+      
+     <li class="lastnavbar"><a href="#" onclick="messages_submit('view_messages'); return false;" class="widget">View Messages</a></li> 
+    </ul> 
+   </div> 
+  </td> 
+ </tr> 
+</table> 
+<div class="smallheader ohide searchfolder"> 
+ <a href="mailbox.php?mailbox=INBOX&amp;Horde=d4ebcc89b5ebf94c79649d660f7a21c9" class="smallheader" title="View messages in Inbox">Inbox</a> 
+</div> 
+ 
+<form method="post" id="messages" name="messages" action="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9"> 
+<input type="hidden" name="mailbox" value="**search_522xqcm81hgkow0ow4wss4" /> 
+<input type="hidden" name="mailbox_token" value="T8C-cM4-X8MBIkjOArcNxhgXjHw" /> 
+<input type="hidden" name="Horde" value="d4ebcc89b5ebf94c79649d660f7a21c9" />
+ 
+ 
+<table class="messageList" width="100%" cellspacing="0"> 
+ <tr class="item"> 
+ 
+  <th id="checkheader" width="8%" onclick="$('checkAll').checked = !$('checkAll').checked;makeSelection(-1);"> 
+   <label for="checkAll" class="hidden">Check All/None</label> 
+   <input type="checkbox" class="checkbox" id="checkAll" name="checkAll" onclick="makeSelection(-1);if(window.event){window.event.cancelBubble = true;}else if(event){event.stopPropagation();}" title="Check All/None (Accesskey A)" accesskey="A" /> 
+  </th> 
+ 
+ 
+  <th class="item" width="4%" onclick="document.location.href=this.down('A').href;"> 
+    <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;sortby=1&amp;actionID=change_sort&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" class="widget">#</a>  
+  </th> 
+ 
+  <th class="selected" width="10%" onclick="document.location.href=this.down('A').href;"> 
+   <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;sortdir=0&amp;sortby=0&amp;actionID=change_sort&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" title="Sort by Date"><img src="/themes/graphics/za.png" alt="\/" title="" /></a> <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;sortdir=0&amp;sortby=0&amp;actionID=change_sort&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" class="widget" accesskey="e">Dat<span class="accessKey">e</span></a>  
+  </th> 
+ 
+  <th class="item" width="20%" onclick="document.location.href=this.down('A').href;"> 
+    <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;sortby=2&amp;actionID=change_sort&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" class="widget" accesskey="m">Fro<span class="accessKey">m</span></a>  
+  </th> 
+ 
+  <th class="item" width="52%" onclick="document.location.href=this.down('A').href;"> 
+    <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;sortby=3&amp;actionID=change_sort&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" class="widget" accesskey="j">Sub<span class="accessKey">j</span>ect</a>  
+  </th> 
+ 
+  <th class="item" width="6%" onclick="document.location.href=this.down('A').href;"> 
+    <a href="/imp/mailbox.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;sortby=6&amp;actionID=change_sort&amp;mailbox_token=T8C-cM4-X8MBIkjOArcNxhgXjHw" class="widget" accesskey="z">Si<span class="accessKey">z</span>e</a>  
+  </th> 
+ 
+ </tr> 
+ 
+ <tr id="row1348INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1348INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1348INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1345</div> 
+  </td> 
+  <td><div class="ohide">04/05/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1348&amp;thismailbox=INBOX" title="Alexandre Boutorine &amp;lt;alexandre.boutorine@mnhn.fr&amp;gt;">Alexandre Boutorine</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1348&amp;thismailbox=INBOX" id="subject1348INBOX">[USM503] Fwd: [[Inserm-Formation-Paris12]] Formation nationale : Droit des contrats - les 13 et 14 juin - Paris</a></div></td> 
+  <td class="rightAlign"><div class="ohide">203 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1342INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1342INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1342INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1339</div> 
+  </td> 
+  <td><div class="ohide">04/05/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1342&amp;thismailbox=INBOX" title="Daniele Praseuth &amp;lt;praseuth@mnhn.fr&amp;gt;">Daniele Praseuth</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1342&amp;thismailbox=INBOX" id="subject1342INBOX">[USM503] pot Vivien le 11 avril</a></div></td> 
+  <td class="rightAlign"><div class="ohide">2 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1334INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1334INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1334INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1331</div> 
+  </td> 
+  <td><div class="ohide">04/05/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1334&amp;thismailbox=INBOX" title="Loic Ponger &amp;lt;ponger@mnhn.fr&amp;gt;">Loic Ponger</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1334&amp;thismailbox=INBOX" id="subject1334INBOX">[USM503] biblio</a></div></td> 
+  <td class="rightAlign"><div class="ohide">2 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1333INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1333INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1333INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1330</div> 
+  </td> 
+  <td><div class="ohide">04/05/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1333&amp;thismailbox=INBOX" title="Fara &amp;lt;fara@mnhn.fr&amp;gt;">Fara</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1333&amp;thismailbox=INBOX" id="subject1333INBOX">[USM503] Fwd: Informations concernant divers marchés</a></div></td> 
+  <td class="rightAlign"><div class="ohide">916 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1326INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1326INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1326INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1323</div> 
+  </td> 
+  <td><div class="ohide">04/05/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1326&amp;thismailbox=INBOX" title="Baudot Corinne &amp;lt;cbaudot@mnhn.fr&amp;gt;">Baudot Corinne</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1326&amp;thismailbox=INBOX" id="subject1326INBOX">[USM503] Bjr, Gabriel a reçu des oligos QQ1 peut il s'en occuper?</a></div></td> 
+  <td class="rightAlign"><div class="ohide">3 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1308INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1308INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1308INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1305</div> 
+  </td> 
+  <td><div class="ohide">04/04/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1308&amp;thismailbox=INBOX" title="Fara &amp;lt;fara@mnhn.fr&amp;gt;">Fara</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1308&amp;thismailbox=INBOX" id="subject1308INBOX">[USM503] Fwd: Fw: [Inserm] Campagne de recrutement d'apprentis</a></div></td> 
+  <td class="rightAlign"><div class="ohide">183 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1287INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1287INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1287INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1284</div> 
+  </td> 
+  <td><div class="ohide">04/04/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1287&amp;thismailbox=INBOX" title="Fara &amp;lt;fara@mnhn.fr&amp;gt;">Fara</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1287&amp;thismailbox=INBOX" id="subject1287INBOX">[USM503] Fwd: Fwd: Fwd: A DIFFUSER LARGEMENT</a></div></td> 
+  <td class="rightAlign"><div class="ohide">18 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1286INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1286INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1286INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1283</div> 
+  </td> 
+  <td><div class="ohide">04/04/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1286&amp;thismailbox=INBOX" title="Fara &amp;lt;fara@mnhn.fr&amp;gt;">Fara</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1286&amp;thismailbox=INBOX" id="subject1286INBOX">[USM503] Fwd: Clas Pitié</a></div></td> 
+  <td class="rightAlign"><div class="ohide">224 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1233INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1233INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1233INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1233</div> 
+  </td> 
+  <td><div class="ohide">03/31/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1233&amp;thismailbox=INBOX" title="ryimbou@mnhn.fr">ryimbou@mnhn.fr</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1233&amp;thismailbox=INBOX" id="subject1233INBOX">[USM503] Re: Informations sur l'incident de messagerie en cours.</a></div></td> 
+  <td class="rightAlign"><div class="ohide">5 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1225INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1225INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1225INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1225</div> 
+  </td> 
+  <td><div class="ohide">03/31/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1225&amp;thismailbox=INBOX" title="Christophe Lavelle &amp;lt;christophe.lavelle@mnhn.fr&amp;gt;">Christophe Lavelle</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1225&amp;thismailbox=INBOX" id="subject1225INBOX">[USM503] 5e Rencontres du GDR ADN; ça commence aujourd'hui, et c'est à côté (Jussieu, bâtiment Esclangon)</a></div></td> 
+  <td class="rightAlign"><div class="ohide">8 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1220INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1220INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1220INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1220</div> 
+  </td> 
+  <td><div class="ohide">03/31/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1220&amp;thismailbox=INBOX" title="Baudot Corinne &amp;lt;cbaudot@mnhn.fr&amp;gt;">Baudot Corinne</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1220&amp;thismailbox=INBOX" id="subject1220INBOX">[USM503] Bjr Charlotte a reçu 9 colis Dutscher pour le commun</a></div></td> 
+  <td class="rightAlign"><div class="ohide">3 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1211INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1211INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1211INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1211</div> 
+  </td> 
+  <td><div class="ohide">03/30/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1211&amp;thismailbox=INBOX" title="Christophe Lavelle &amp;lt;christophe.lavelle@mnhn.fr&amp;gt;">Christophe Lavelle</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1211&amp;thismailbox=INBOX" id="subject1211INBOX">[USM503] séminaires du vendredi</a></div></td> 
+  <td class="rightAlign"><div class="ohide">28 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1209INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1209INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1209INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1209</div> 
+  </td> 
+  <td><div class="ohide">03/30/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1209&amp;thismailbox=INBOX" title="smdubois@mnhn.fr">smdubois@mnhn.fr</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1209&amp;thismailbox=INBOX" id="subject1209INBOX">[USM503] enveloppe Marion</a></div></td> 
+  <td class="rightAlign"><div class="ohide">2 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1207INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1207INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1207INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1207</div> 
+  </td> 
+  <td><div class="ohide">03/30/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1207&amp;thismailbox=INBOX" title="perrouault &amp;lt;perroual@mnhn.fr&amp;gt;">perrouault</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1207&amp;thismailbox=INBOX" id="subject1207INBOX">[USM503] badges radioactivité</a></div></td> 
+  <td class="rightAlign"><div class="ohide">3 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1191INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1191INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1191INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1191</div> 
+  </td> 
+  <td><div class="ohide">03/30/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1191&amp;thismailbox=INBOX" title="Carole Saintome &amp;lt;carole.saintome@mnhn.fr&amp;gt;">Carole Saintome</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1191&amp;thismailbox=INBOX" id="subject1191INBOX">[USM503] CR congrès Recob16</a></div></td> 
+  <td class="rightAlign"><div class="ohide">3 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1181INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1181INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1181INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1181</div> 
+  </td> 
+  <td><div class="ohide">03/30/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1181&amp;thismailbox=INBOX" title="Fara &amp;lt;fara@mnhn.fr&amp;gt;">Fara</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1181&amp;thismailbox=INBOX" id="subject1181INBOX">[USM503] Fwd: Marché de concessions de droits d'usage à titre non exclusif de divers logiciels scientifiques - RITME INFORMATIQUE - N° SAFIr 14760</a></div></td> 
+  <td class="rightAlign"><div class="ohide">88 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1180INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1180INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1180INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1180</div> 
+  </td> 
+  <td><div class="ohide">03/30/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1180&amp;thismailbox=INBOX" title="Fara &amp;lt;fara@mnhn.fr&amp;gt;">Fara</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1180&amp;thismailbox=INBOX" id="subject1180INBOX">[USM503] Fwd: Marché de fournitures de PC portables et de leurs extensions - HP - N° SAFIr 14120</a></div></td> 
+  <td class="rightAlign"><div class="ohide">1.9 MB</div></td> 
+ </tr> 
+ 
+ <tr id="row1174INBOX" class="seen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1174INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1174INBOX" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1174</div> 
+  </td> 
+  <td><div class="ohide">03/29/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1174&amp;thismailbox=INBOX" title="Judith Lopes &amp;lt;judith.lopes@mnhn.fr&amp;gt;">Judith Lopes</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1174&amp;thismailbox=INBOX" id="subject1174INBOX">[USM503] Étudiante en 1ère année BTS Biotechnologies recherche un stage</a></div></td> 
+  <td class="rightAlign"><div class="ohide">841 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1170INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1170INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1170INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1170</div> 
+  </td> 
+  <td><div class="ohide">03/29/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1170&amp;thismailbox=INBOX" title="Boutorine Alexandre Sergueyevitch &amp;lt;alexandre.boutorine@mnhn.fr&amp;gt;">Boutorine Alexandre Sergueyevitch</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1170&amp;thismailbox=INBOX" id="subject1170INBOX">[USM503] RESEDA Structures et Personnels </a></div></td> 
+  <td class="rightAlign"><div class="ohide">171 KB</div></td> 
+ </tr> 
+ 
+ <tr id="row1169INBOX" class="unseen"> 
+  <td> 
+   <div class="ohide"><label><input id="check1169INBOX" type="checkbox" class="checkbox" name="indices[]" onclick="selectRange(event);" value="1169INBOX" /><img src="/imp/themes/graphics/mail_unseen.png" alt="Unseen" title="Unseen" />&nbsp;</label></div> 
+  </td> 
+  <td> 
+   <div class="ohide">1169</div> 
+  </td> 
+  <td><div class="ohide">03/29/2016&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1169&amp;thismailbox=INBOX" title="Boutorine Alexandre Sergueyevitch &amp;lt;alexandre.boutorine@mnhn.fr&amp;gt;">Boutorine Alexandre Sergueyevitch</a>&nbsp;</div></td> 
+  <td><div class="ohide"><a href="/imp/message.php?Horde=d4ebcc89b5ebf94c79649d660f7a21c9&amp;mailbox=%2A%2Asearch_522xqcm81hgkow0ow4wss4&amp;index=1169&amp;thismailbox=INBOX" id="subject1169INBOX">[USM503] Formation Word prise en main</a></div></td> 
+  <td class="rightAlign"><div class="ohide">142 KB</div></td> 
+ </tr> 
+ 
+</table> 
+<input type="hidden" name="page" value="3" /> 
+<input type="hidden" id="actionID" name="actionID" value="" /> 
+<input type="hidden" id="targetMbox" name="targetMbox" value="" /> 
+<input type="hidden" id="newMbox" name="newMbox" value="0" /> 
+<input type="hidden" id="flag" name="flag" value="" /> 
+</form> 
+<script type="text/javascript">//<![CDATA[
+var messagelist = {"1348INBOX":1,"1342INBOX":0,"1334INBOX":0,"1333INBOX":0,"1326INBOX":1,"1308INBOX":0,"1287INBOX":1,"1286INBOX":1,"1233INBOX":1,"1225INBOX":0,"1220INBOX":1,"1211INBOX":1,"1209INBOX":0,"1207INBOX":1,"1191INBOX":0,"1181INBOX":1,"1180INBOX":1,"1174INBOX":0,"1170INBOX":1,"1169INBOX":1};
+//]]></script>
+<script language="JavaScript1.5" type="text/javascript">
+<!--
+var _setHordeTitle = 1;
+try {
+    if (document.title && parent.frames.horde_main) parent.document.title = document.title;
+} catch (e) {
+}
+// -->
+</script>
+<script type="text/javascript">
+<!--
+if (typeof(_setHordeTitle) == 'undefined' && document.title && parent.frames.horde_main) parent.document.title = document.title;
+// -->
+</script>
+</body>
+</html>

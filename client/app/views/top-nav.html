@@ -11,6 +11,14 @@
                 </a>
             </h2>
         </span>
+        <span ng-class="{ active: vm.isActive('/Search')}" class="nav-menu-item" ng-show="vm.isAuthenticated()">
+            <h2>
+                <a href="#/Search">
+                    <md-icon show-xs hide-gt-xs md-font-set="material-icons">search</md-icon>
+                    <span hide-xs show-gt-xs>Search</span>
+                </a>
+            </h2>
+        </span>
         <span flex></span>
         <span ng-show="vm.isAuthenticated()">
             <md-icon md-font-set="material-icons">person</md-icon><span hide-xs>{{vm.getUsername()}}</span>

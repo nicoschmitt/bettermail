@@ -26,7 +26,10 @@
         <strong>Oups</strong> 
         <p>{{vm.message}}</p>
     </div>
-    <md-list ng-hide="vm.loading">
+    <div ng-hide="vm.loading || vm.mails.length">
+        No results.
+    </div>
+    <md-list ng-hide="vm.loading || vm.pages.current == 0">
         <div ng-repeat="mail in vm.mails">
             <md-list-item layout-wrap class="md-3-line" ng-click="vm.open(mail)">
                 <md-icon class="hide-xs" md-font-set="md-avatar-icon material-icons">account_circle</md-icon>

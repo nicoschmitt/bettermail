@@ -13,6 +13,7 @@
     router.get("/attach", controller.attachment);
 
     router.post("/search", authUserRequired, controller.search);
+    router.get("/search/:page", authUserRequired, controller.searchpaging);
 
     router.get('/:id', authUserRequired, controller.getmail);
     
