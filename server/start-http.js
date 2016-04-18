@@ -1,12 +1,23 @@
 (function(){
     
     var httpsRedirect = function(req, res, next) {
-        if (req.headers['X-Forwarded-Proto'] != 'https' && !req.headers['x-arr-ssl']) {
+        console.log(req.headers['x-forwarded-proto']);
+        console.log('https://' + req.hostname + req.originalUrl);
+        if (req.headers['x-forwarded-proto'] != 'https' && !req.headers['x-arr-ssl']) {
+            console.log('https://' + req.hostname + req.originalUrl);
             return res.redirect(301, 'https://' + req.hostname + req.originalUrl);
         } else {
             return next();
         }
     };
+    
+    module.exports.forceHttps = function(app) {
+        var env = process.env.NODE_ENV;
+        if (env != "development") {
+            // force https 
+            app.use(httpsRedirect);
+        }
+    }
     
     module.exports.start = function(app) {
         
@@ -27,17 +38,12 @@
         } else {
             var http = require('http');
             server = http.createServer(app);
-            if (env == "production") {
-                // force https on production
-                app.use(httpsRedirect);
-            }
         }
 
         server.listen(port, process.env.IP || "0.0.0.0", function() {
             var addr = server.address();
             console.log("Server listening at", addr.address + ":" + addr.port);
         });
-    
     }
 
 }());

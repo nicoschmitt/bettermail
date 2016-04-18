@@ -14,9 +14,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("etag", false);
 
+var myserver = require("./server/start-http");
+myserver.forceHttps(app);
+
 require('./server/routes').register(app);
 
 app.use(compression());
 app.use(express.static(path.resolve(__dirname, 'client')));
 
-require("./server/start-http").start(app);
+myserver.start(app);
