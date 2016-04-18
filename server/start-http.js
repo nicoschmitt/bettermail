@@ -1,8 +1,8 @@
 (function(){
     
     var httpsRedirect = function(req, res, next) {
-        if (req.headers['x-forwarded-proto'] != 'https') {
-            return res.redirect(301, 'https://' + req.headers.host + req.url);
+        if (req.headers['X-Forwarded-Proto'] != 'https' && !req.headers['x-arr-ssl']) {
+            return res.redirect(301, 'https://' + req.hostname + req.originalUrl);
         } else {
             return next();
         }
